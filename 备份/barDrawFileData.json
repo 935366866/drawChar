@@ -1,0 +1,21 @@
+{
+	"name":"SNP_data.txt",
+	"size":null,
+	"rowNums":11,
+	"columnNums":5,
+	"content":[
+		["Category","parent1","sib2","parent2","sib1"],
+		["Upstream","31929","38478","27272","38816"],
+		["ExonicStopgain","368","466","385","450"],
+		["ExonicStoploss","111","129","109","130"],
+		["ExonicSynonymous","8540","10117","6419","10182"],
+		["ExonicNon-synonymous","12858","15616","11546","15507"],
+		["Intronic","50897","58707","34220","59229"],
+		["Splicing","125","155","133","156"],
+		["Downstream","29262","35223","24761","35393"],
+		["Upstream/Downstream","2629","3069","1961","3107"],
+		["Intergenic","1157181","1362319","1147010","1352341"]
+	],
+	"lines":11,
+	"resultFlag":null
+}
