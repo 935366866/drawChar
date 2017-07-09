@@ -191,12 +191,19 @@ $(function(){
 			x:'center'
 		}
 	};
-
+	myChart.on('click', function (parmas) {
+	    $.get('detail?q=' + params.name, function (detail) {
+	        myChart.setOption({
+	            series: [{
+	                name: 'bar',
+	                // 通过饼图表现单个柱子中的数据分布
+	                data: [detail.data]
+	            }]
+	        });
+	    });
+	});
     // 使用刚指定的配置项和数据显示图表。
     myChart.setOption(option);
-        
-
- 	
 	$("select").on("change.bs.select",function(){
 		vue[$(this).attr("id")]=$(this).selectpicker("val");
 	})
@@ -218,7 +225,7 @@ $(function(){
 			}
 		});
 	});
-	
+
 	//提交参数
 	$("#submit_paras").click(function(){
 		var formData =  allParams();//取form表单参数
@@ -236,30 +243,47 @@ $(function(){
 				updateEchartsData(myChart,formData,data["content"],vue.xColumnField);
 			},    
 			error : function(XMLHttpRequest) {
-				alert(XMLHttpRequest.status +' '+ XMLHttpRequest.statusText);    job
+				alert(XMLHttpRequest.status +' '+ XMLHttpRequest.statusText);
 			}
 		});
 	});
-	
-
+	$("#btnPng").click(function(){
+		downloadPic(myChart);
+	});
+  	function downloadPic(myChart){
+		var $a = document.createElement('a');
+		var type = 'png';
+		var title = myChart.getModel().get('title.0.text') || 'echarts';
+		$a.download = title + '.' + type;
+		$a.target = '_blank';
+	    var url = myChart.getConnectedDataURL({
+	        type: type,
+	        backgroundColor:myChart.getModel().get('backgroundColor') || '#fff'
+	    });
+	    $a.href = url;
+	     // Chrome and Firefox
+        if (typeof MouseEvent === 'function' && !$.support.msie && !$.support.edge) {
+            var evt = new MouseEvent('click', {
+                view: window,
+                bubbles: true,
+                cancelable: false
+            });
+            $a.dispatchEvent(evt);
+        }
+        // IE
+        else {
+            var html = ''
+                + '<body style="margin:0;">'
+                + '<img src="' + url + '" style="max-width:100%;" />'
+                + '</body>';
+            var tab = window.open();
+            tab.document.write(html);
+        }
+  	}
 	//与后台交互时冻结窗口
 	$(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
 
 });
-function initTable(el,data){
-	var tableData = {total:data.rowNums,rows:data.content};
-
-	 $(el).bootstrapTable({
-		  striped: true,   //是否显示行间隔色
-		  cache: false,   //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
-		  pageNumber:1,   //初始化加载第一页，默认第一页
-		  pageSize: 10,   //每页的记录行数（*）
-		  showColumns: false, //是否显示所有的列
-		  search: false, //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
-		  data:tableData
-	});	
-}
-
 function updateEcharts(echarts,data){
 	var color = [];
 	$(".spectrum").each(function(){

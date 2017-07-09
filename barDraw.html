@@ -6,7 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="content-type" content="text/html" ; charset="utf-8">
     <link href="css/bootstrap.min.css" rel="stylesheet">
-
+    <link href="css/app.css" rel="stylesheet" >
+    <link href="css/bootstrap-table.css" rel="stylesheet">
+    <link href="css/jquery.fileupload.css" rel="stylesheet">   
+    <link href="css/bootstrap-select.css" rel="stylesheet">
+    <link href="css/soda_common.css" rel="stylesheet">
+    <link href="css/spectrum.css" rel="stylesheet"/>
     <script src="js/jquery-1.11.2.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <!--添加本页面的js-->
@@ -14,30 +19,16 @@
 		module = "__MODULE__";
 		tool_id = "{$tool_id}";
 	</script>
-	<link rel="stylesheet" href="css/app.css">
-    <!--表格js-->
-    <link rel="stylesheet" href="css/bootstrap-table.css">
     <script src="js/bootstrap-table.js"></script>
-    <!--文件上传-->
-    <link rel="stylesheet" href="css/jquery.fileupload.css">
     <script src="js/jquery.ui.widget.js"></script>
     <script src="js/jquery.fileupload.js"></script>
     <script src="js/jquery.iframe-transport.js"></script>
-    <!-- form中选择 -->
     <script src="js/bootstrap-select.js"></script>
     <script src="js/defaults-zh_CN.js"></script>
-    <link href="css/bootstrap-select.css" rel="stylesheet">
-    <!--遮罩-->
     <script src="js/jquery.blockUI.js" type="text/javascript"></script>
-    
-	<!-- 引入通用的文件 -->
     <script src="js/common.js"></script>
-    <link rel="stylesheet" href="css/soda_common.css">
-    <!-- 引入echars-->
     <script src="js/echarts.min.js"></script>
     <script src="js/vue.js"></script>
-    <!--引入spectrum-->
-    <link href="css/spectrum.css" rel="stylesheet"/>
     <script src="js/spectrum.js"></script>
     <script src="js/jquery.spectrum-zh-cn.js"></script>
     <script src="js/barDraw.js"></script>
@@ -65,7 +56,6 @@
 				</ul>
 			</div>
 		</div>
-	
 		<div class="main_nav2" style="box-shadow:-2px 3px 9px 0px #ccc;">
 			<div class="change_box">
 				<ul class="main_nav2_left">
@@ -97,19 +87,16 @@
 		<div class="app_title">
 			<p>差异基因火山图绘制工具 V1.0</p>
 		</div>
-        <div class="change_box" style="padding-left: 0px; padding-right:0px;padding-bottom:50px;" id='taskPanel'>
-           
-        </div>
-        
+        <div class="change_box" style="padding-left: 0px; padding-right:0px;padding-bottom:50px;" id='taskPanel'> </div>       
         <div class="myTab">
-        	<div class="change_box">
-				<div class="tabs" style="float: left;">
+        	<div style="width: 1200px;margin: 0 auto;height: 100%;">
+				<div class="tabs" style="float: left;width: 48%;">
 					<ul class="nav" id="appTab">
 						<li><a href="#file" data-toggle="tab">上传文件内容</a></li>
 						<li class="active" ><a href="#set" data-toggle="tab">参数设置</a></li>	
 					</ul>
 				</div>	
-				<div class="tabs" style="position: absolute;left: 652px;">
+				<div class="tabs" style="float: left;">
 					<ul class="nav" id="appTab">
 						<li  ><a href="#direction" data-toggle="tab">使用说明</a></li>	
 						<li class="active"><a href="#show" data-toggle="tab">绘图展示</a></li>
@@ -118,27 +105,20 @@
 			</div>	
 		</div>
         <div id="myTabContent" class="change_box">
-        	
 			<div class="tab-content input_l">
 				<div class="tab-pane in active" id="set">		
 					<div class="panel  panel-default">
 						<div class="panel-heading">
-							<h3 class="panel-title">
-								文件参数
-							</h3>
+							<h3 class="panel-title">文件参数</h3>
 							<a id="use_default">使用示例文件</a>
 						</div>				
-						<div class="panel-body">
-						
+						<div class="panel-body" style="height: 439px;">
 							<form id="parameter">
 								<!--输入文件-->
 								<div class="part">
-									<div class="input_a_l">						
-											输入文件:
-									</div>
+									<div class="input_a_l">输入文件:</div>
 									<div class="input_a_m">
 										<input v-model="input" type="text" class="form-control" id="input" name="input" placeholder="">
-		
 									</div>
 									<div class="input_a_r">
 										<a onclick="openUrl('#input','file')">
@@ -151,25 +131,17 @@
 									</div>
 								</div>
 								<div class="part"> 
-									<div class="input_a_l">
-										绘图列数:
-									</div>	
-									<div class="input_a_l" style="width: 12%;">
-										x轴数据
-									</div>
+									<div class="input_a_l">绘图列数:</div>	
+									<div class="input_a_l" style="width: 12%;">x轴数据</div>
 									<div class="input_a_m" style="width: 27%;">
 										<select v-model="xColumnField" id="xColumnField"  name="xColumnField" class="selectpicker select_width" autocomplete="off" >
 											<option v-for="item in fileData['content'][0]" :value="item">{{item}}</option>
 										</select>
 									</div>		
 								</div>
-								
 								<div class="line"></div>
-		
 								<div class="part">
-									<div class="input_a_l">						
-											标题名称:
-									</div>
+									<div class="input_a_l">标题名称:</div>
 									<div class="input_b_2">
 										<input v-model="title" type="text" class="form-control" id="title" name="title" placeholder=""/>
 									</div>
@@ -180,9 +152,7 @@
 											<option value="30">30</option>
 										</select>
 									</div>		
-									<div class="input_b_t1">
-										大小:
-									</div>	
+									<div class="input_b_t1">大小:</div>	
 									<div class="input_b_3">
 										<select v-model="title_font" id="title_font" name="title_font" class="selectpicker select_width" autocomplete="off" >
 											<option value="normal">常规</option>
@@ -190,15 +160,10 @@
 											<option value="italic">斜体</option>
 										</select>
 									</div>											
-									<div class="input_b_t1">
-										字体:
-									</div>
-		
+									<div class="input_b_t1">字体:</div>
 								</div>
 								<div class="part">
-									<div class="input_a_l">						
-											X轴名称:
-									</div>
+									<div class="input_a_l">X轴名称:</div>
 									<div class="input_b_2">
 										<input v-model="xlab"  type="text" class="form-control" id="xlab" name="xlab" placeholder="">
 									</div>
@@ -209,9 +174,7 @@
 											<option value="14">14</option>
 										</select>
 									</div>		
-									<div class="input_b_t1">
-										大小:
-									</div>	
+									<div class="input_b_t1">大小:</div>	
 									<div class="input_b_3">
 										<select v-model="xlab_font" id="xlab_font" name="xlab_font" class="selectpicker select_width" autocomplete="off" >
 											<option value="normal">常规</option>
@@ -219,16 +182,10 @@
 											<option value="italic">斜体</option>
 										</select>
 									</div>											
-									<div class="input_b_t1">
-										字体:
-									</div>
-		
-	
+									<div class="input_b_t1">字体:</div>
 								</div>
 								<div class="part">
-									<div class="input_a_l">						
-											Y轴名称:
-									</div>
+									<div class="input_a_l">Y轴名称:</div>
 									<div class="input_b_2">
 										<input v-model="ylab" type="text" class="form-control" id="ylab" name="ylab" placeholder="">
 									</div>
@@ -239,9 +196,7 @@
 											<option value="14">14</option>
 										</select>
 									</div>		
-									<div class="input_b_t1">
-										大小:
-									</div>	
+									<div class="input_b_t1">大小:</div>	
 									<div class="input_b_3">
 										<select v-model="ylab_font"  id="ylab_font" name="ylab_font" class="selectpicker select_width" autocomplete="off" >
 											<option value="normal">常规</option>
@@ -249,10 +204,7 @@
 											<option value="italic">斜体</option>
 										</select>
 									</div>											
-									<div class="input_b_t1">
-										字体:
-									</div>
-		
+									<div class="input_b_t1">字体:</div>
 								</div>
 								<div class="line"></div>
 			
@@ -288,15 +240,10 @@
 										<input v-model="barWidth" type="text" class="form-control" id="barWidth" name="barWidth" placeholder="">
 									</div>
 								</div>
-								<div class="line"></div>
-		
-		
-								<div class="part">
-									<button id="submit_paras" type="button" class="btn btn-success">开始绘图</button>
-								</div>
-		
-		
 							</form>
+						</div>
+						<div class="panel-footer" style="height: 51px;">
+							<button id="submit_paras" type="button" class="btn btn-success">开始绘图</button>
 						</div>
 					</div>
 				</div>
@@ -305,8 +252,19 @@
 						<div class="panel-heading">
 							<h3 class="panel-title">文件标题</h3>
 						</div>
-						<div class="panel-body">
-							文件内容
+						<div class="panel-body" style="padding: 0;">
+							<table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th v-for="item in fileData.content[0]">{{item}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(item,index) in fileData.content" v-if="index!=0">
+                                        <td v-for="item1 in item">{{item1 }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
 						</div>
 					</div>
 				</div>
@@ -319,7 +277,7 @@
 						<div class="panel-heading">
 							<h3 class="panel-title">绘图展示</h3>
 							<div class="download_button">
-								<button onclick="javascript:window.open('img/app_01.png')" class="btn btn-success"><img src="img/app_01.png" alt="">PNG</button>
+								<button  id="btnPng" class="btn btn-success"><img src="img/app_01.png" alt="">PNG</button>
 								<button onclick="javascript:window.open('img/app_01.png')"  class="btn btn-primary"><img src="img/app_01.png" alt="">PDF</button>
 							</div>
 						</div>
@@ -344,10 +302,10 @@
 							</p>
 							<p>参数：</p>
 							<pre>
---input	  输入文件名。例如：fpkm.txt
---output  输出文件名。后缀为.png时，输出png图片；后缀为.pdf时，输出pdf图片。例如：violin.png
---ylab	  y坐标轴标题，默认为：log(RPKM+1)。例如：log(TPM+1)
---title	  图标题，默认为：RPKM distribution。例如：TPM distribution	
+								--input	  输入文件名。例如：fpkm.txt
+								--output  输出文件名。后缀为.png时，输出png图片；后缀为.pdf时，输出pdf图片。例如：violin.png
+								--ylab	  y坐标轴标题，默认为：log(RPKM+1)。例如：log(TPM+1)
+								--title	  图标题，默认为：RPKM distribution。例如：TPM distribution	
 							</pre>
 							<p>输入：</p>
 							<div class="indent">基因表达量文件，第一列为geneID，其他列为各样本中基因表达量值（FPKM，RPKM或TPM）。</div>
@@ -356,7 +314,6 @@
 							</div>
 							<p>输出：</p>
 							<div class="indent">后缀为.png时，输出png图片；后缀为.pdf时，输出pdf图片。</div>
-	
 						</div>
 					</div>
 				</div>
