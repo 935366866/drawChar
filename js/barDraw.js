@@ -110,7 +110,6 @@ $(function(){
 					$(".spectrum").spectrum({
 						preferredFormat: "hex3"
 					});
-
 				});
 			},
 			xColumnField:function(val,oldVal){
@@ -125,6 +124,7 @@ $(function(){
  	var myChart = echarts.init(document.getElementById('main'));
         // 指定图表的配置项和数据
     var option = {
+    	backgroundColor: '#fff',
 	    title: {
 	        text: '',
 	        textStyle:{
@@ -191,16 +191,27 @@ $(function(){
 			x:'center'
 		}
 	};
+	
+	//点击柱子，对应的数据高亮显示
 	myChart.on('click', function (parmas) {
-	    $.get('detail?q=' + params.name, function (detail) {
-	        myChart.setOption({
-	            series: [{
-	                name: 'bar',
-	                // 通过饼图表现单个柱子中的数据分布
-	                data: [detail.data]
-	            }]
-	        });
-	    });
+		$('#appTabLeft li:eq(0) a').tab('show');
+		var tr=$("#file table tr").first();
+		var ths=$(tr).children("th");
+		//取到x轴名字
+		var xText=vue.xColumnField;
+		var index;
+		for(var i=0;i<ths.length;i++){
+			if(ths[i].innerText==xText){
+				index=i;
+				break;
+			}									
+		}
+		$("#file table tr").each(function(){
+			if($(this).children("td:eq("+index+")").text()==parmas.name){
+				$(this).addClass("active");
+				$(this).siblings("tr").removeClass("active");
+			}			
+		})
 	});
     // 使用刚指定的配置项和数据显示图表。
     myChart.setOption(option);
@@ -247,6 +258,7 @@ $(function(){
 			}
 		});
 	});
+	//支持下载png格式
 	$("#btnPng").click(function(){
 		downloadPic(myChart);
 	});

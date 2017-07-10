@@ -13,25 +13,25 @@
   float: right;
   text-align: center;
 }
-.myTab .tabs #appTab {
+.myTab .tabs .nav {
   float: left;
   height: 39px;
   margin-top: 28px;
 }
-.myTab .tabs #appTab a {
+.myTab .tabs .nav a {
   color: #656565!important;
 }
 
-.myTab .tabs #appTab li {
+.myTab .tabs .nav li {
   width: 127px;
   height: 100%;
   float: right;
 }
-.myTab .tabs #appTab li.active a {
+.myTab .tabs .nav li.active a {
   background-color: #fff;
   border-bottom: solid 1px #fff;
 }
-.myTab .tabs #appTab li a {
+.myTab .tabs .nav li a {
   height: 100%;
   line-height: 39px;
   font-size: 15px;
@@ -109,6 +109,9 @@
   height: 490px;
   overflow-y: auto;
   background-color: #fff!important;
+}
+#myTabContent #file table .active{
+	/*font-weight: bold;*/
 }
 #parameter {
   height: auto;

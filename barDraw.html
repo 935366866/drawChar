@@ -12,26 +12,6 @@
     <link href="css/bootstrap-select.css" rel="stylesheet">
     <link href="css/soda_common.css" rel="stylesheet">
     <link href="css/spectrum.css" rel="stylesheet"/>
-    <script src="js/jquery-1.11.2.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <!--添加本页面的js-->
-    <script>
-		module = "__MODULE__";
-		tool_id = "{$tool_id}";
-	</script>
-    <script src="js/bootstrap-table.js"></script>
-    <script src="js/jquery.ui.widget.js"></script>
-    <script src="js/jquery.fileupload.js"></script>
-    <script src="js/jquery.iframe-transport.js"></script>
-    <script src="js/bootstrap-select.js"></script>
-    <script src="js/defaults-zh_CN.js"></script>
-    <script src="js/jquery.blockUI.js" type="text/javascript"></script>
-    <script src="js/common.js"></script>
-    <script src="js/echarts.min.js"></script>
-    <script src="js/vue.js"></script>
-    <script src="js/spectrum.js"></script>
-    <script src="js/jquery.spectrum-zh-cn.js"></script>
-    <script src="js/barDraw.js"></script>
 </head>
 
 <body style="background-color:#fff;">
@@ -91,13 +71,13 @@
         <div class="myTab">
         	<div style="width: 1200px;margin: 0 auto;height: 100%;">
 				<div class="tabs" style="float: left;width: 48%;">
-					<ul class="nav" id="appTab">
+					<ul class="nav" id="appTabLeft">
 						<li><a href="#file" data-toggle="tab">上传文件内容</a></li>
 						<li class="active" ><a href="#set" data-toggle="tab">参数设置</a></li>	
 					</ul>
 				</div>	
 				<div class="tabs" style="float: left;">
-					<ul class="nav" id="appTab">
+					<ul class="nav" id="appTabRight">
 						<li  ><a href="#direction" data-toggle="tab">使用说明</a></li>	
 						<li class="active"><a href="#show" data-toggle="tab">绘图展示</a></li>
 					</ul>
@@ -218,9 +198,9 @@
 									<div class="input_c_4">
 										<input v-bind:value="color[index]" type="text" class="form-control spectrum">
 									</div>	
-									<div class="input_e_2 colorInput">
+									<!--<div class="input_e_2 colorInput">
 										位置:
-									</div>
+									</div>-->
 									<div class="input_c_4">
 										<select class="selectpicker select_width">
 											<option value="Top">Top</option>
@@ -277,8 +257,8 @@
 						<div class="panel-heading">
 							<h3 class="panel-title">绘图展示</h3>
 							<div class="download_button">
-								<button  id="btnPng" class="btn btn-success"><img src="img/app_01.png" alt="">PNG</button>
-								<button onclick="javascript:window.open('img/app_01.png')"  class="btn btn-primary"><img src="img/app_01.png" alt="">PDF</button>
+								<button  id="btnPng" class="btn btn-success">PNG</button>
+								<button id="btnPdf" onclick="convertCanvasToImage()" class="btn btn-primary">PDF</button>
 							</div>
 						</div>
 						<div class="panel-body">
@@ -324,8 +304,6 @@
 	<!-- 标签切换 -->
 	
 	
-
-
 	<!-- 添加选择目录的模态框 -->
 	<div class="modal fade" id="selectUrl" tabindex="-1" aria-labelledby="选择路径" aria-hidden="true">
 
@@ -335,9 +313,7 @@
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 						&times;
 					</button>
-					<h4 class="modal-title">
-						路径
-					</h4>
+					<h4 class="modal-title">路径</h4>
 					<div class="input-group">
 						<input type="text" class="form-control" id="inputUrl">
 						<span class="input-group-btn">
@@ -388,6 +364,45 @@
             <p>北京拓美科基因科技有限公司</p>
         </footer>
     </div>
+    <script src="js/jquery-1.11.2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!--添加本页面的js-->
+    <script>
+		module = "__MODULE__";
+		tool_id = "{$tool_id}";
+	</script>
+    <script src="js/bootstrap-table.js"></script>
+    <script src="js/jquery.ui.widget.js"></script>
+    <script src="js/jquery.fileupload.js"></script>
+    <script src="js/jquery.iframe-transport.js"></script>
+    <script src="js/jquery.blockUI.js" type="text/javascript"></script>
+    <script src="js/bootstrap-select.js"></script>
+    <script src="js/defaults-zh_CN.js"></script>
+    <script src="js/html2canvas.min.js"></script>
+    <script src="js/jspdf.min.js"></script>
+    <script src="js/echarts.min.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/spectrum.js"></script>
+    <script src="js/jquery.spectrum-zh-cn.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/barDraw.js"></script>   
+    <script>
+    	
+   	//支持下载pdf格式
+    function convertCanvasToImage() {
+        html2canvas(document.getElementById('main'), {
+            onrendered: function(canvas) {
+                document.body.appendChild(canvas);
+                createPDFObject(canvas.toDataURL("image/jpeg"));
+            }
+        });
+    }
+    function createPDFObject(imgData) {
+        var doc = new jsPDF('p', 'pt');
+        doc.addImage(imgData, 10, 10, 500, 340, 'img');
+        doc.save('test.pdf');
+    }
+    </script>
 </body>
 
 </html>

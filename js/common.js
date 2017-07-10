@@ -121,23 +121,23 @@ function checkUrl(uncheckedUrl,url,inputId,tableId){
 	var path = uncheckedUrl?uncheckedUrl:'/';
 	path = path.replace('//','/');
 	$.ajax({
-				    url:url,  
-				    type:'post',
-				    data:{url:path},
-				    dataType: "json",
-				    success:function(data,textStatus) {
-				    	if(data['status']=='ERROR'){    //请求成功但没有执行成功
-				    		alert(data['data']);
-				    	}else{
-				    		var obj=data['data']
-							$('#' + inputId).val(path);
-							$('#' + tableId).bootstrapTable('load',obj);
-				    	}
-				   	  },    
-				    error : function(XMLHttpRequest) {
-				       	alert(XMLHttpRequest.status +' '+ XMLHttpRequest.statusText);   
-				     }
-				}); 
+		    url:url,  
+		    type:'get',
+		    data:{url:path},
+		    dataType: "json",
+		    success:function(data,textStatus) {
+		    	if(data['status']=='ERROR'){    //请求成功但没有执行成功
+		    		alert(data['data']);
+		    	}else{
+		    		var obj=data['data']
+					$('#' + inputId).val(path);
+					$('#' + tableId).bootstrapTable('load',obj);
+		    	}
+		   	  },    
+		    error : function(XMLHttpRequest) {
+		       	alert(XMLHttpRequest.status +' '+ XMLHttpRequest.statusText);   
+		     }
+		}); 
 		
 	};
 function uploadFile(url,uploadId,inputId,ddir){  

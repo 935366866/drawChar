@@ -575,3 +575,10 @@ html {
   margin-right: 15px;
   width: 62%;
 }
+#selectUrl .modal-body{
+	height: 320px !important;
+	overflow: auto !important;
+}
+#selectUrl .modal-body .fixed-table-container{
+	height: auto !important;
+}
