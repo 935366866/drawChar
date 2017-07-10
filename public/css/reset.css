@@ -1,0 +1,10 @@
+body { font-size:12px; font-family:Microsoft YaHei, Verdana, Geneva, sans-serif;background-color:#fff;}
+ul,li,p,dl,dt,dd,h2,h3,a,input,span,strong ,body{padding:0; margin:0;}
+a {text-decoration:none;color:#000;}
+ul,li{list-style:none; }
+img{ border:0 none;}
+div{margin: 0 auto;}
+.clearfix:after {visibility: hidden; display: block; font-size: 0; content: " "; clear: both; height: 0; }
+.clearfix { display: inline-table; }
+* html .clearfix { height: 1%; }
+.clearfix { display: block; }
