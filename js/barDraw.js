@@ -97,7 +97,7 @@ $(function(){
 					},
 					dataType: "json",
 					success:function(data) {
-						 vue["fileData"]=data;
+						 vue["fileData"]=data; 
 					},    
 					error : function(XMLHttpRequest) {
 						//alert(XMLHttpRequest.status +' '+ XMLHttpRequest.statusText);    

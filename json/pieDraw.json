@@ -1,14 +1,6 @@
 {
     "input": "/whx/abc/1.txt",
     "title": "title1",
-    "title_size": "18",
-    "title_font": "bold",
-    "xlab": "xxx",
-    "xlab_size": "13",
-    "xlab_font": "italic",
-    "ylab": "yyy",
-    "ylab_size": "14",
-    "ylab_font": "italic",
-    "barWidth": "70",
-    "xColumnField":"Category"
+    "geneColumn":1,
+    "funColumn":11
 }

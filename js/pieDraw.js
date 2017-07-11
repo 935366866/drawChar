@@ -6,91 +6,59 @@ $(function(){
 		data:{
 			input:"",
 			title:"",
-			xlab:"",
-			ylab:"",
-			barWidth:"",
+			geneColumn_sel:null,
+			funColumn_sel:null,
 			fileData:{
-				content:[]
+				outData:[]
 			},
 			title_size_sel:"",
 			title_font_sel:"",
-			xlab_size_sel:"",
-			xlab_font_sel:"",
-			ylab_size_sel:"",
-			ylab_font_sel:"",
-			xColumnField_sel:null,
 			color:['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3']
 		},
 		computed: {
-		  title_size: {
-		    get: function () {
-		      return this.title_size_sel;
-		    },
-		    set: function (newValue) {
-		       this.title_size_sel = newValue;
-		       $("#title_size").selectpicker("val",newValue);
-		    }
-		  },
-		  title_font:{
-		  	get: function () {
-		      return this.title_font_sel;
-		    },
-		    set: function (newValue) {
-		    	this.title_font_sel = newValue;
-		       $("#title_font").selectpicker("val",newValue);
-		    }
-		  },
-		  xlab_size:{
-		  	get: function () {
-		      return this.xlab_size_sel;
-		    },
-		    set: function (newValue) {
-		    	this.xlab_size_sel = newValue;
-		       $("#xlab_size").selectpicker("val",newValue);
-		    }
-		  },
-		  xlab_font:{
-		  	get: function () {
-		      return this.xlab_font_sel;
-		    },
-		    set: function (newValue) {
-		    	this.xlab_font_sel = newValue;
-		       $("#xlab_font").selectpicker("val",newValue);
-		    }
-		  },
-		  ylab_size:{
-		  	get: function () {
-		      return this.ylab_size_sel;
-		    },
-		    set: function (newValue) {
-		    	this.ylab_size_sel = newValue;
-		       $("#ylab_size").selectpicker("val",newValue);
-		    }
-		  },
-		  ylab_font:{
-		  	get: function () {
-		      return this.ylab_font_sel;
-		    },
-		    set: function (newValue) {
-		    	this.ylab_font_sel = newValue;
-		       $("#ylab_font").selectpicker("val",newValue);
-		    }
-		  },
-		  xColumnField:{
-		  	get: function () {
-		      return this.xColumnField_sel;
-		    },
-		    set: function (newValue) {
-		    	if(!newValue) return;
-		    	this.xColumnField_sel = newValue;
-		        $("#xColumnField").selectpicker("val",newValue);
-		    }
-		  }
+			title_size: {
+			    get: function () {
+			      return this.title_size_sel;
+			    },
+			    set: function (newValue) {
+			       this.title_size_sel = newValue;
+			       $("#title_size").selectpicker("val",newValue);
+			    }
+			},
+			title_font:{
+			  	get: function () {
+			      return this.title_font_sel;
+			    },
+			    set: function (newValue) {
+			    	this.title_font_sel = newValue;
+			       $("#title_font").selectpicker("val",newValue);
+			    }
+			},
+			geneColumn:{
+			  	get: function () {
+			      return this.geneColumn_sel;
+			    },
+			    set: function (newValue) {
+			    	if(!newValue) return;
+			    	this.geneColumn_sel = newValue;
+			        $("#geneColumn").selectpicker("val",newValue);
+			    }
+			},
+			funColumn:{
+			  	get: function () {
+			      return this.funColumn_sel;
+			    },
+			    set: function (newValue) {
+			    	if(!newValue) return;
+			    	this.funColumn_sel = newValue;
+			        $("#funColumn").selectpicker("val",newValue);
+			    }
+			}
 		},
 		watch:{
 			input:function(val,oldVal){
 				$.ajax({
-					url: 'json/barDrawFileData.json',  
+					url: 'json/pieDrawFileData.json',  
 					type:'get',
 					data:{
 						fileName:val
@@ -106,13 +74,13 @@ $(function(){
 			},
 			fileData:function(val,oldVal){
 				this.$nextTick(function(){
-					$('#xColumnField').selectpicker('refresh');
+					$('#geneColumn').selectpicker('refresh');
 					$(".spectrum").spectrum({
 						preferredFormat: "hex3"
 					});
 				});
 			},
-			xColumnField:function(val,oldVal){
+			geneColumn:function(val,oldVal){
 				this.$nextTick(function(){
 					$(".spectrum").spectrum({
 						preferredFormat: "hex3"
@@ -121,86 +89,86 @@ $(function(){
 			}
 		}
 	});
- 	var myChart = echarts.init(document.getElementById('main'));
-        // 指定图表的配置项和数据
-    var option = {
-    	backgroundColor: '#fff',
-	    title: {
-	        text: '',
-	        textStyle:{
-	        	fontStyle:'normal',
-	        	fontWeight:'normal',
-	        	fontSize:14
-	        },
-	        x:"center",
-	        top:10
-	       
-	    },
-	    tooltip : {
-	        trigger: 'axis',
-	        showDelay : 0,
-	        axisPointer:{
-	            show: true,
-	            type : 'cross',
-	            lineStyle: {
-	                type : 'dashed',
-	                width : 1
-	            }
-	        },
-	        zlevel: 1
-	    },
-	    legend: {
-	        orient: 'vertical',
-	        left: 'left',
-//	        data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
-	    },
-		series : [
-	        {
-	            name: '访问来源',
-	            type: 'pie',
-	            radius : '55%',
-	            center: ['50%', '60%'],
-	            data:[
-//	                {value:335, name:'直接访问'},
-//	                {value:310, name:'邮件营销'},
-//	                {value:234, name:'联盟广告'},
-//	                {value:135, name:'视频广告'},
-//	                {value:1548, name:'搜索引擎'}
-	            ],
-	            itemStyle: {
-	                emphasis: {
-	                    shadowBlur: 10,
-	                    shadowOffsetX: 0,
-	                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-	                }
-	            }
-	        }
-	    ]
-	};
-	
-	//点击柱子，对应的数据高亮显示
-	myChart.on('click', function (parmas) {
-		$('#appTabLeft li:eq(0) a').tab('show');
-		var tr=$("#file table tr").first();
-		var ths=$(tr).children("th");
-		//取到x轴名字
-		var xText=vue.xColumnField;
-		var index;
-		for(var i=0;i<ths.length;i++){
-			if(ths[i].innerText==xText){
-				index=i;
-				break;
-			}									
-		}
-		$("#file table tr").each(function(){
-			if($(this).children("td:eq("+index+")").text()==parmas.name){
-				$(this).addClass("active");
-				$(this).siblings("tr").removeClass("active");
-			}			
-		})
-	});
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
+// 	var myChart = echarts.init(document.getElementById('main'));
+//      // 指定图表的配置项和数据
+//  var option = {
+//  	backgroundColor: '#fff',
+//	    title: {
+//	        text: '',
+//	        textStyle:{
+//	        	fontStyle:'normal',
+//	        	fontWeight:'normal',
+//	        	fontSize:14
+//	        },
+//	        x:"center",
+//	        top:10
+//	       
+//	    },
+//	    tooltip : {
+//	        trigger: 'axis',
+//	        showDelay : 0,
+//	        axisPointer:{
+//	            show: true,
+//	            type : 'cross',
+//	            lineStyle: {
+//	                type : 'dashed',
+//	                width : 1
+//	            }
+//	        },
+//	        zlevel: 1
+//	    },
+//	    legend: {
+//	        orient: 'vertical',
+//	        left: 'left',
+////	        data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+//	    },
+//		series : [
+//	        {
+//	            name: '访问来源',
+//	            type: 'pie',
+//	            radius : '55%',
+//	            center: ['50%', '60%'],
+//	            data:[
+////	                {value:335, name:'直接访问'},
+////	                {value:310, name:'邮件营销'},
+////	                {value:234, name:'联盟广告'},
+////	                {value:135, name:'视频广告'},
+////	                {value:1548, name:'搜索引擎'}
+//	            ],
+//	            itemStyle: {
+//	                emphasis: {
+//	                    shadowBlur: 10,
+//	                    shadowOffsetX: 0,
+//	                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+//	                }
+//	            }
+//	        }
+//	    ]
+//	};
+//	
+//	//点击柱子，对应的数据高亮显示
+//	myChart.on('click', function (parmas) {
+//		$('#appTabLeft li:eq(0) a').tab('show');
+//		var tr=$("#file table tr").first();
+//		var ths=$(tr).children("th");
+//		//取到x轴名字
+//		var xText=vue.xColumnField;
+//		var index;
+//		for(var i=0;i<ths.length;i++){
+//			if(ths[i].innerText==xText){
+//				index=i;
+//				break;
+//			}									
+//		}
+//		$("#file table tr").each(function(){
+//			if($(this).children("td:eq("+index+")").text()==parmas.name){
+//				$(this).addClass("active");
+//				$(this).siblings("tr").removeClass("active");
+//			}			
+//		})
+//	});
+//  // 使用刚指定的配置项和数据显示图表。
+//  myChart.setOption(option);
 	$("select").on("change.bs.select",function(){
 		vue[$(this).attr("id")]=$(this).selectpicker("val");
 	})
@@ -229,7 +197,7 @@ $(function(){
 		updateEcharts(myChart,formData);//更新echarts设置 标题 xy轴文字之类的
 		myChart.showLoading();
 		$.ajax({
-			url: 'json/barDrawFileData.json',  
+			url: 'json/pieDrawFileData.json',  
 			type:'get',
 			data:{
 				fileName:formData.input
@@ -237,6 +205,7 @@ $(function(){
 			dataType: "json",
 			success:function(data) {
 				myChart.hideLoading();
+				updateEchartsData(myChart,formData,data["content"],vue.geneColumn);
 				updateEchartsData(myChart,formData,data["content"],vue.xColumnField);
 			},    
 			error : function(XMLHttpRequest) {
@@ -244,67 +213,68 @@ $(function(){
 			}
 		});
 	});
-	//支持下载png格式
-	$("#btnPng").click(function(){
-		downloadPic(myChart);
-	});
-  	function downloadPic(myChart){
-		var $a = document.createElement('a');
-		var type = 'png';
-		var title = myChart.getModel().get('title.0.text') || 'echarts';
-		$a.download = title + '.' + type;
-		$a.target = '_blank';
-	    var url = myChart.getConnectedDataURL({
-	        type: type,
-	        backgroundColor:myChart.getModel().get('backgroundColor') || '#fff'
-	    });
-	    $a.href = url;
-	     // Chrome and Firefox
-        if (typeof MouseEvent === 'function' && !$.support.msie && !$.support.edge) {
-            var evt = new MouseEvent('click', {
-                view: window,
-                bubbles: true,
-                cancelable: false
-            });
-            $a.dispatchEvent(evt);
-        }
-        // IE
-        else {
-            var html = ''
-                + '<body style="margin:0;">'
-                + '<img src="' + url + '" style="max-width:100%;" />'
-                + '</body>';
-            var tab = window.open();
-            tab.document.write(html);
-        }
-  	}
-	//与后台交互时冻结窗口
-	$(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
+//	//支持下载png格式
+//	$("#btnPng").click(function(){
+//		downloadPic(myChart);
+//	});
+//	function downloadPic(myChart){
+//		var $a = document.createElement('a');
+//		var type = 'png';
+//		var title = myChart.getModel().get('title.0.text') || 'echarts';
+//		$a.download = title + '.' + type;
+//		$a.target = '_blank';
+//	    var url = myChart.getConnectedDataURL({
+//	        type: type,
+//	        backgroundColor:myChart.getModel().get('backgroundColor') || '#fff'
+//	    });
+//	    $a.href = url;
+//	     // Chrome and Firefox
+//      if (typeof MouseEvent === 'function' && !$.support.msie && !$.support.edge) {
+//          var evt = new MouseEvent('click', {
+//              view: window,
+//              bubbles: true,
+//              cancelable: false
+//          });
+//          $a.dispatchEvent(evt);
+//      }
+//      // IE
+//      else {
+//          var html = ''
+//              + '<body style="margin:0;">'
+//              + '<img src="' + url + '" style="max-width:100%;" />'
+//              + '</body>';
+//          var tab = window.open();
+//          tab.document.write(html);
+//      }
+//	}
+//	//与后台交互时冻结窗口
+//	$(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
 
 });
-function updateEcharts(echarts,data){
-	var color = [];
-	$(".spectrum").each(function(){
-		var colorStr = $(this).val();
-		color.push(colorStr);
-	});
-	echarts.setOption({
-		title:{
-			text:data.title,
-			textStyle:buildTextStyle(data.title_font,data.title_size)
-		},
-//		xAxis :{
-//			name:data.xlab,
-//			nameTextStyle:buildTextStyle(data.xlab_font,data.xlab_size)
+
+//function updateEcharts(echarts,data){
+//	var color = [];
+//	$(".spectrum").each(function(){
+//		var colorStr = $(this).val();
+//		color.push(colorStr);
+//	});
+//	echarts.setOption({
+//		title:{
+//			text:data.title,
+//			textStyle:buildTextStyle(data.title_font,data.title_size)
 //		},
-//		yAxis :{
-//			name:data.ylab,
-//			nameTextStyle:buildTextStyle(data.ylab_font,data.ylab_size)
-//		},
-		color:color
-		
-	});
-}
+////		xAxis :{
+////			name:data.xlab,
+////			nameTextStyle:buildTextStyle(data.xlab_font,data.xlab_size)
+////		},
+////		yAxis :{
+////			name:data.ylab,
+////			nameTextStyle:buildTextStyle(data.ylab_font,data.ylab_size)
+////		},
+//		color:color
+//		
+//	});
+//}
 
 function buildTextStyle(font,fontSize){
 	var fontStyle,fontWeight;

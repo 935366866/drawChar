@@ -3,10 +3,10 @@
 	"size":null,
 	"rowNums":11,
 	"columnNums":2,
-	"content":[
-		["Category","parent1"],
-		["Upstream","31929"],
-		["ExonicStopgain","368000"],
+	"outData":[
+		["name","y"],
+		["Acromyrmex echinatior",3.0],
+		["Apis florea",62.0],
 		["ExonicStoploss","11100"],
 		["ExonicSynonymous","854000"],
 		["ExonicNon-synonymous","128580"],

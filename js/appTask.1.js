@@ -96,24 +96,24 @@ $("#pointcolor_DIY").spectrum({
 	//点击示例文件，加载已有参数
 	$("#use_default").click(function(){
 		$.ajax({
-					url: 'json/appTask.1.json',  
-					type:'get',
-					data:tool_id,
-					dataType: "json",
-					success:function(data) {
-						for(var i in data){
-							var type = document.getElementById(i).type
-							if(type == "text"){
-								$("#"+i).val(data[i]);
-							}else{
-								$("#"+i).selectpicker("val",data[i]);
-							}
-						}	
-					},    
-					error : function(XMLHttpRequest) {
-						alert(XMLHttpRequest.status +' '+ XMLHttpRequest.statusText);    
+			url: 'json/appTask.1.json',  
+			type:'get',
+			data:tool_id,
+			dataType: "json",
+			success:function(data) {
+				for(var i in data){
+					var type = document.getElementById(i).type
+					if(type == "text"){
+						$("#"+i).val(data[i]);
+					}else{
+						$("#"+i).selectpicker("val",data[i]);
 					}
-				});
+				}	
+			},    
+			error : function(XMLHttpRequest) {
+				alert(XMLHttpRequest.status +' '+ XMLHttpRequest.statusText);    
+			}
+		});
 	});
 
 	//提交参数
