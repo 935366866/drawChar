@@ -111,23 +111,13 @@
 									</div>
 								</div>
 								<div class="part"> 
-									<div class="input_a_l">统计内容:</div>	
-									<div class="selectLeft" >
-										<div class="input_a_l" style="width: 55px;">基因列</div>
-										<div class="input_a_m" style="width: 100px;">
-											<select v-model="geneColumn" id="geneColumn"  name="geneColumn" class=" select_width" autocomplete="off" >
-												<option v-for="item in fileData['content'][0]" :value="item">{{item}}</option>
-											</select>
-										</div>	
-									</div>
-									<div class="selectRight">
-										<div class="input_a_l" style="width: 55px;margin-left: 80px;">功能列</div>
-										<div class="input_a_m" style="width: 100px;">
-											<select v-model="funColumn" id="funColumn"  name="funColumn" class="select_width" autocomplete="off" >
-												<option v-for="item in fileData['content'][0]" v-if="item!=fileData['content'][0][0]" :value="item">{{item}}</option>
-											</select>
-										</div>	
-									</div>
+									<div class="input_a_l">绘图列数:</div>	
+									<div class="input_a_l" style="width: 12%;">x轴数据</div>
+									<div class="input_a_m" style="width: 27%;">
+										<select v-model="xColumnField" id="xColumnField"  name="xColumnField" class="selectpicker select_width" autocomplete="off" >
+											<option v-for="item in fileData['content'][0]" :value="item">{{item}}</option>
+										</select>
+									</div>		
 								</div>
 								<div class="line"></div>
 								<div class="part">
@@ -148,12 +138,58 @@
 											<option value="normal">常规</option>
 											<option value="bold">加粗</option>
 											<option value="italic">斜体</option>
-									  	</select>
+										</select>
 									</div>											
 									<div class="input_b_t1">字体:</div>
 								</div>
-								<div v-for="(item,index) in seriesData" class="part">
-									<div class="input_e_1" style="width: 40%;">						
+								<div class="part">
+									<div class="input_a_l">X轴名称:</div>
+									<div class="input_b_2">
+										<input v-model="xlab"  type="text" class="form-control" id="xlab" name="xlab" placeholder="">
+									</div>
+									<div class="input_b_3">
+										<select v-model="xlab_size" id="xlab_size" name="xlab_size" class="selectpicker select_width" autocomplete="off" >
+											<option value="12">12</option>
+											<option value="13">13</option>
+											<option value="14">14</option>
+										</select>
+									</div>		
+									<div class="input_b_t1">大小:</div>	
+									<div class="input_b_3">
+										<select v-model="xlab_font" id="xlab_font" name="xlab_font" class="selectpicker select_width" autocomplete="off" >
+											<option value="normal">常规</option>
+											<option value="bold">加粗</option>
+											<option value="italic">斜体</option>
+										</select>
+									</div>											
+									<div class="input_b_t1">字体:</div>
+								</div>
+								<div class="part">
+									<div class="input_a_l">Y轴名称:</div>
+									<div class="input_b_2">
+										<input v-model="ylab" type="text" class="form-control" id="ylab" name="ylab" placeholder="">
+									</div>
+									<div class="input_b_3">
+										<select v-model="ylab_size" id="ylab_size" name="ylab_size" class="selectpicker select_width" autocomplete="off" >
+											<option value="12">12</option>
+											<option value="13">13</option>
+											<option value="14">14</option>
+										</select>
+									</div>		
+									<div class="input_b_t1">大小:</div>	
+									<div class="input_b_3">
+										<select v-model="ylab_font"  id="ylab_font" name="ylab_font" class="selectpicker select_width" autocomplete="off" >
+											<option value="normal">常规</option>
+											<option value="bold">加粗</option>
+											<option value="italic">斜体</option>
+										</select>
+									</div>											
+									<div class="input_b_t1">字体:</div>
+								</div>
+								<div class="line"></div>
+			
+								<div v-for="(item,index) in fileData['content'][0]" v-if="item!=xColumnField" class="part">
+									<div class="input_e_1">						
 											{{item}}:
 									</div>
 									<div class="input_e_2 colorInput">
@@ -175,7 +211,7 @@
 									</div>
 								</div>
 
-								<!--<div class="line" v-if="fileData['content'][0]&&fileData['content'][0].length>1"></div>
+								<div class="line" v-if="fileData['content'][0]&&fileData['content'][0].length>1"></div>
 								
 		
 								<div class="part">
@@ -183,7 +219,7 @@
 									<div class="input_f_2">
 										<input v-model="barWidth" type="text" class="form-control" id="barWidth" name="barWidth" placeholder="">
 									</div>
-								</div>-->
+								</div>
 							</form>
 						</div>
 						<div class="panel-footer" style="height: 51px;">
@@ -349,12 +385,9 @@
     <script src="js/spectrum.js"></script>
     <script src="js/jquery.spectrum-zh-cn.js"></script>
     <script src="js/common.js"></script>
-    <script src="js/pieDraw.js"></script>   
+    <script src="js/scatterDraw.js"></script>   
     <script>
-    	$(function(){
-    		$("#geneColumn").selectpicker({noneSelectedText:'请选择'});
-    		$("#funColumn").selectpicker({noneSelectedText:'请选择'});
-    	})
+    	
    	//支持下载pdf格式
     function convertCanvasToImage() {
         html2canvas(document.getElementById('main'), {
