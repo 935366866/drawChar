@@ -8,7 +8,7 @@ $(function(){
 			title:"",
 			xlab:"",
 			ylab:"",
-			barWidth:"",
+			pointsize:"",
 			fileData:{
 				content:[]
 			},
@@ -243,7 +243,7 @@ $(function(){
 		updateEcharts(myChart,formData);//更新echarts设置 标题 xy轴文字之类的
 		myChart.showLoading();
 		$.ajax({
-			url: 'json/barDrawFileData.json',  
+			url: 'json/scatterDrawFileData.json',  
 			type:'get',
 			data:{
 				fileName:formData.input
@@ -371,6 +371,7 @@ function updateEchartsData(echarts,echartsStyle,echartsData,xAxisField){
 			}else{
 				option.series.push({
 					type:"scatter",
+					symbolSize: echartsStyle.pointsize,
 					name:head,
 					data:data
 				});

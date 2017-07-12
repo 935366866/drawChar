@@ -9,6 +9,11 @@
     "ylab": "yyy",
     "ylab_size": "14",
     "ylab_font": "italic",
-    "barWidth": "70",
-    "xColumnField":"Category"
+    "barWidth": "自适应",
+    "xColumnField":"Category",
+    "legendWidth":25,  
+    "legendHeight":14,
+    "legendY":"bottom",
+    "legendX":"center"
+         
 }

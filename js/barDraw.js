@@ -9,6 +9,8 @@ $(function(){
 			xlab:"",
 			ylab:"",
 			barWidth:"",
+			legendWidth:"",
+			legendHeight:"",
 			fileData:{
 				content:[]
 			},
@@ -19,6 +21,8 @@ $(function(){
 			ylab_size_sel:"",
 			ylab_font_sel:"",
 			xColumnField_sel:null,
+			legendX_sel:"",
+			legendY_sel:"",
 			color:['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3']
 		},
 		computed: {
@@ -75,6 +79,26 @@ $(function(){
 		    	this.ylab_font_sel = newValue;
 		       $("#ylab_font").selectpicker("val",newValue);
 		    }
+		  },
+		  legendX:{
+		  	get: function () {
+		      return this.legendX_sel;
+		    }
+//		  	,
+//		    set: function (newValue) {
+//		    	this.legendX_sel = newValue;
+//		       $("#legendX").selectpicker("val",newValue);
+//		    }
+		  },
+		  legendY:{
+		  	get: function () {
+		      return this.legendY_sel;
+		    }
+//		  	,
+//		    set: function (newValue) {
+//		    	this.legendY_sel = newValue;
+//		       $("#legendY").selectpicker("val",newValue);
+//		    }
 		  },
 		  xColumnField:{
 		  	get: function () {
@@ -187,8 +211,9 @@ $(function(){
 	    	
 	    },
 		legend: {
-			bottom:0,
-			x:'center'
+//			y:'bottom',
+////			bottom:0,
+//			x:'center'
 		}
 	};
 	
@@ -240,6 +265,7 @@ $(function(){
 	//提交参数
 	$("#submit_paras").click(function(){
 		var formData =  allParams();//取form表单参数
+		console.log(formData)
 		updateEcharts(myChart,formData);//更新echarts设置 标题 xy轴文字之类的
 		myChart.showLoading();
 		$.ajax({
@@ -315,6 +341,10 @@ function updateEcharts(echarts,data){
 			name:data.ylab,
 			nameTextStyle:buildTextStyle(data.ylab_font,data.ylab_size)
 		},
+		legend:{
+			x:data.legendX,
+			y:data.legendY
+		},
 		color:color
 		
 	});
@@ -335,7 +365,7 @@ function buildTextStyle(font,fontSize){
 	return {
 		fontStyle:fontStyle,
 		fontWeight:fontWeight,
-		fontSize:fontSize
+		fontSize:fontSize	
 	}
 }
 function updateEchartsData(echarts,echartsStyle,echartsData,xAxisField){
@@ -371,10 +401,15 @@ function updateEchartsData(echarts,echartsStyle,echartsData,xAxisField){
 			}else{
 				option.series.push({
 					type:"bar",
+					barWidth: echartsStyle.barWidth,
 					name:head,
 					data:data
 				});
 				option.legend.data.push(head);
+				var numWidth=parseInt(echartsStyle.legendWidth);
+				var numHeight=parseInt(echartsStyle.legendHeight);
+				option.legend.itemHeight=numHeight;
+				option.legend.itemWidth=numWidth;
 			}
 			
 			

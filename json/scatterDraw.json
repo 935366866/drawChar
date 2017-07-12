@@ -9,6 +9,6 @@
     "ylab": "yyy",
     "ylab_size": "14",
     "ylab_font": "italic",
-    "barWidth": "70",
+    "pointsize": "20",
     "xColumnField":"Category"
 }

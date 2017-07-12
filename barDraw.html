@@ -114,7 +114,7 @@
 									<div class="input_a_l">绘图列数:</div>	
 									<div class="input_a_l" style="width: 12%;">x轴数据</div>
 									<div class="input_a_m" style="width: 27%;">
-										<select v-model="xColumnField" id="xColumnField"  name="xColumnField" class="selectpicker select_width" autocomplete="off" >
+										<select v-model="xColumnField" id="xColumnField"  name="xColumnField" class="select_width" autocomplete="off" >
 											<option v-for="item in fileData['content'][0]" :value="item">{{item}}</option>
 										</select>
 									</div>		
@@ -193,27 +193,46 @@
 											{{item}}:
 									</div>
 									<div class="input_e_2 colorInput">
-										颜色:
+										自定义颜色:
 									</div>
 									<div class="input_c_4">
 										<input v-bind:value="color[index]" type="text" class="form-control spectrum">
 									</div>	
-									<!--<div class="input_e_2 colorInput">
-										位置:
-									</div>-->
-									<div class="input_c_4">
-										<select class="selectpicker select_width">
-											<option value="Top">Top</option>
-											<option value="Bottom">Bottom</option>
-											<option value="Left">Left</option>
-											<option value="Right">Right</option>
-										</select>
-									</div>
 								</div>
 
 								<div class="line" v-if="fileData['content'][0]&&fileData['content'][0].length>1"></div>
-								
-		
+								<div class="part">
+									<div class="input_a_l">图例宽度:</div>
+									<div class="input_b_2">
+										<input v-model="legendWidth" type="text" class="form-control" id="legendWidth" name="legendWidth" placeholder="">
+									</div>
+									<div class="input_a_l" style="width: 15%;margin-left: 30px;">图例高度:</div>
+									<div class="input_b_2">
+										<input v-model="legendHeight" type="text" class="form-control" id="legendHeight" name="legendHeight" placeholder="">
+									</div>
+								</div>
+								<div class="part">
+									<div class="input_a_l">图例位置:</div>
+									<div class="input_b_t1" style="float: left;">X轴:</div>	
+									<div class="input_b_3" style="float: left;width: 85px;">
+										<select v-model="legendX" id="legendX"  name="legendX" class="selectpicker select_width" autocomplete="off" >
+											<option value="Left">Left</option>
+											<option value="Center">Center</option>
+											<option value="Right">Right</option>
+										</select>
+									</div>		
+									<div class="input_b_t1" style="float: left;margin-left: 20px;">Y轴:</div>
+									<div class="input_b_3" style="float: left;width: 85px;">
+										<select v-model="legendY" id="legendY" name="legendY" class="selectpicker select_width" autocomplete="off" >
+											<option value="Top">Top</option>
+											<option value="Center">Center</option>
+											<option value="Bottom">Bottom</option>
+										</select>
+									</div>											
+									
+								</div>
+	
+								<div class="line"></div>
 								<div class="part">
 									<div class="input_a_l">柱条宽度:</div>
 									<div class="input_f_2">
@@ -387,7 +406,9 @@
     <script src="js/common.js"></script>
     <script src="js/barDraw.js"></script>   
     <script>
-    	
+    	$(function(){
+    		$("#xColumnField").selectpicker({noneSelectedText:'请选择'});
+    	})
    	//支持下载pdf格式
     function convertCanvasToImage() {
         html2canvas(document.getElementById('main'), {
