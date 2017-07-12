@@ -1,6 +1,9 @@
 var paramUrl = 'json/jobUrl.json'; //module+'/Data/remoteDirView';  //选择路径的模态框，向后台请求的地址
 
-$(function(){	
+$(function(){
+	var color1=['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'];
+	var color2=['#c23531','#00f', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'];
+	var color3=['#ff000','#c23531','#0f0', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'];
 	vue=new Vue({
 		el:"#myTabContent",
 		data:{
@@ -23,7 +26,8 @@ $(function(){
 			xColumnField_sel:null,
 			legendX_sel:"",
 			legendY_sel:"",
-			color:['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3']
+			color:color1
+
 		},
 		computed: {
 		  title_size: {
@@ -83,22 +87,21 @@ $(function(){
 		  legendX:{
 		  	get: function () {
 		      return this.legendX_sel;
+		   },
+		    set: function (newValue) {
+		    	if(!newValue) return;
+		    	this.legendX_sel = newValue;
+		       $("#legendX").selectpicker("val",newValue);
 		    }
-//		  	,
-//		    set: function (newValue) {
-//		    	this.legendX_sel = newValue;
-//		       $("#legendX").selectpicker("val",newValue);
-//		    }
 		  },
 		  legendY:{
 		  	get: function () {
 		      return this.legendY_sel;
+		   },
+		    set: function (newValue) {
+		    	this.legendY_sel = newValue;
+		       $("#legendY").selectpicker("val",newValue);
 		    }
-//		  	,
-//		    set: function (newValue) {
-//		    	this.legendY_sel = newValue;
-//		       $("#legendY").selectpicker("val",newValue);
-//		    }
 		  },
 		  xColumnField:{
 		  	get: function () {
@@ -107,6 +110,7 @@ $(function(){
 		    set: function (newValue) {
 		    	if(!newValue) return;
 		    	this.xColumnField_sel = newValue;
+		    	
 		        $("#xColumnField").selectpicker("val",newValue);
 		    }
 		  }
@@ -211,9 +215,8 @@ $(function(){
 	    	
 	    },
 		legend: {
-//			y:'bottom',
-////			bottom:0,
-//			x:'center'
+			y:vue.legendY,
+			x:vue.legendX
 		}
 	};
 	
@@ -242,7 +245,16 @@ $(function(){
     myChart.setOption(option);
 	$("select").on("change.bs.select",function(){
 		vue[$(this).attr("id")]=$(this).selectpicker("val");
-	})
+	});
+	$("#colorProject").on("change.bs.select",function(){
+		if($(this).selectpicker("val")=="project1"){
+			vue.color=color1;
+		}else if($(this).selectpicker("val")=="project2"){
+			vue.color=color2;
+		}else{
+			vue.color=color3;
+		}
+	});
 	//点击示例文件，加载已有参数
 	$("#use_default").click(function(){
 		$.ajax({

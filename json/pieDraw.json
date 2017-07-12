@@ -1,6 +1,9 @@
 {
     "input": "/whx/abc/1.txt",
     "title": "title1",
+    "legendWidth":25,  
+    "legendHeight":14,
+    "legendX":"left"
     "geneColumn":1,
     "funColumn":2
 }

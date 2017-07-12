@@ -258,11 +258,11 @@ $(function(){
 			}
 		});
 	});
-	//支持下载png格式
+//	支持下载png格式
 	$("#btnPng").click(function(){
 		downloadPic(myChart);
 	});
-  	function downloadPic(myChart){
+	function downloadPic(myChart){
 		var $a = document.createElement('a');
 		var type = 'png';
 		var title = myChart.getModel().get('title.0.text') || 'echarts';
@@ -291,7 +291,7 @@ $(function(){
             var tab = window.open();
             tab.document.write(html);
         }
-  	}
+	}
 	//与后台交互时冻结窗口
 	$(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
 
@@ -361,11 +361,15 @@ function updateEchartsData(echarts,echartsStyle,echartsData,xAxisField){
 			}
 		}
 		
+		
+		console.log(resultData)
 		for(var i=0;i<resultData.length;i++){
 			var row = resultData[i];
 			var head = row[0];
 			row.shift();
+			console.log(head)
 			var data = row;
+			console.log(data)
 			if(head == xAxisField){
 				option.xAxis.data=data;
 			}else{

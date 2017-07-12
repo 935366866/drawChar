@@ -6,92 +6,122 @@ $(function(){
 		data:{
 			input:"",
 			title:"",
-			t:null,
+			xlab:"",
+			ylab:"",
+			barWidth:"",
 			legendWidth:"",
 			legendHeight:"",
-			legendX_sel:"",
-			geneColumn_sel:null,
-			funColumn_sel:null,
 			fileData:{
 				content:[]
 			},
 			title_size_sel:"",
 			title_font_sel:"",
+			xlab_size_sel:"",
+			xlab_font_sel:"",
+			ylab_size_sel:"",
+			ylab_font_sel:"",
+			xColumnField_sel:null,
+			legendX_sel:"",
+			legendY_sel:"",
 			color:['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3']
 		},
 		computed: {
-			seriesData:function(){
-				if(!this.geneColumn){
-					return new Array();
-				}
-				//
-				var datas=this.fileData.content[0];
-				if(!datas){
-					return new Array();
-				}
-				var index;
-				for(var i=0;i<datas.length;i++){
-					if(datas[i]==this.geneColumn){
-						index=i;
-						break;
-					}
-				}
-				var resultArr=[];
-				for(var i=1;i<this.fileData.content.length;i++){
-					resultArr.push(this.fileData.content[i][index]);
-				}
-				return resultArr;
-			},
-			title_size: {
-			    get: function () {
-			      return this.title_size_sel;
-			    },
-			    set: function (newValue) {
-			       this.title_size_sel = newValue;
-			       $("#title_size").selectpicker("val",newValue);
-			    }
-			},
-			title_font:{
-			  	get: function () {
-			      return this.title_font_sel;
-			    },
-			    set: function (newValue) {
-			    	this.title_font_sel = newValue;
-			       $("#title_font").selectpicker("val",newValue);
-			    }
-			},
-			geneColumn:{
-			  	get: function () {
-			      return this.geneColumn_sel;
-			    },
-			    set: function (newValue) {
-			    	if(!newValue) return;
-			    	this.geneColumn_sel = newValue;
-			        $("#geneColumn").selectpicker("val",newValue);
-			    }
-			},
-			funColumn:{
-			  	get: function () {
-			      return this.funColumn_sel;
-			    },
-			    set: function (newValue) {
-			    	if(!newValue) return;
-			    	this.funColumn_sel = newValue;
-			        $("#funColumn").selectpicker("val",newValue);
-			    }
-			}
+		  title_size: {
+		    get: function () {
+		      return this.title_size_sel;
+		    },
+		    set: function (newValue) {
+		       this.title_size_sel = newValue;
+		       $("#title_size").selectpicker("val",newValue);
+		    }
+		  },
+		  title_font:{
+		  	get: function () {
+		      return this.title_font_sel;
+		    },
+		    set: function (newValue) {
+		    	this.title_font_sel = newValue;
+		       $("#title_font").selectpicker("val",newValue);
+		    }
+		  },
+		  xlab_size:{
+		  	get: function () {
+		      return this.xlab_size_sel;
+		    },
+		    set: function (newValue) {
+		    	this.xlab_size_sel = newValue;
+		       $("#xlab_size").selectpicker("val",newValue);
+		    }
+		  },
+		  xlab_font:{
+		  	get: function () {
+		      return this.xlab_font_sel;
+		    },
+		    set: function (newValue) {
+		    	this.xlab_font_sel = newValue;
+		       $("#xlab_font").selectpicker("val",newValue);
+		    }
+		  },
+		  ylab_size:{
+		  	get: function () {
+		      return this.ylab_size_sel;
+		    },
+		    set: function (newValue) {
+		    	this.ylab_size_sel = newValue;
+		       $("#ylab_size").selectpicker("val",newValue);
+		    }
+		  },
+		  ylab_font:{
+		  	get: function () {
+		      return this.ylab_font_sel;
+		    },
+		    set: function (newValue) {
+		    	this.ylab_font_sel = newValue;
+		       $("#ylab_font").selectpicker("val",newValue);
+		    }
+		  },
+		  legendX:{
+		  	get: function () {
+		      return this.legendX_sel;
+		   },
+		    set: function (newValue) {
+		    	if(!newValue) return;
+		    	this.legendX_sel = newValue;
+		       $("#legendX").selectpicker("val",newValue);
+		    }
+		  },
+		  legendY:{
+		  	get: function () {
+		      return this.legendY_sel;
+		   },
+		    set: function (newValue) {
+		    	this.legendY_sel = newValue;
+		       $("#legendY").selectpicker("val",newValue);
+		    }
+		  },
+		  xColumnField:{
+		  	get: function () {
+		      return this.xColumnField_sel;
+		    },
+		    set: function (newValue) {
+		    	if(!newValue) return;
+		    	this.xColumnField_sel = newValue;
+		    	
+		        $("#xColumnField").selectpicker("val",newValue);
+		    }
+		  }
 		},
 		watch:{
 			input:function(val,oldVal){
 				$.ajax({
-					url: 'json/pieDrawFileData.json',  
+					url: 'json/barDrawFileData.json',  
 					type:'get',
 					data:{
 						fileName:val
 					},
 					dataType: "json",
 					success:function(data) {
-						 vue["fileData"]=data;
+						 vue["fileData"]=data; 
 					},    
 					error : function(XMLHttpRequest) {
 						//alert(XMLHttpRequest.status +' '+ XMLHttpRequest.statusText);    
@@ -100,44 +130,23 @@ $(function(){
 			},
 			fileData:function(val,oldVal){
 				this.$nextTick(function(){
-					$('#geneColumn').selectpicker('refresh');				
-					this.geneColumn_sel=$('#geneColumn').selectpicker("val");
-					$('#funColumn').selectpicker('refresh');
-					this.funColumn=$('#funColumn').selectpicker("val");
+					$('#xColumnField').selectpicker('refresh');
 					$(".spectrum").spectrum({
 						preferredFormat: "hex3"
 					});
 				});
 			},
-			geneColumn:function(val,oldVal){
+			xColumnField:function(val,oldVal){
 				this.$nextTick(function(){
 					$(".spectrum").spectrum({
 						preferredFormat: "hex3"
 					});
 				});
-			},
-			funColumn:function(val,oldVal){
-				this.$nextTick(function(){
-					$(".spectrum").spectrum({
-						preferredFormat: "hex3"
-					});
-				});
-			},
-			legendX:{
-			  	get: function () {
-			      return this.legendX_sel;
-			   },
-			    set: function (newValue) {
-			    	if(!newValue) return;
-			    	this.legendX_sel = newValue;
-			       $("#legendX").selectpicker("val",newValue);
-			    }
 			}
 		}
 	});
-	
-	 // 指定图表的配置项和数据
-   	var myChart = echarts.init(document.getElementById('main')); 
+ 	var myChart = echarts.init(document.getElementById('main'));
+        // 指定图表的配置项和数据
     var option = {
     	backgroundColor: '#fff',
 	    title: {
@@ -148,34 +157,63 @@ $(function(){
 	        	fontSize:14
 	        },
 	        x:"center",
-	        top:10
+	        top:20
 	       
 	    },
 	    tooltip : {
-	        trigger: 'item',
-        	formatter: "{a} <br/>{b} : {c} ({d}%)"
-	    },
-	    legend: {
-	    	orient: 'vertical',
-	    	data: [],
-			x:vue.legendX
-		},
-		series : [
-	        {
-	            name: '访问来源',
-	            type: 'pie',
-	            radius : '55%',
-	            center: ['50%', '60%'],
-	            data:[],
-	            itemStyle: {
-	                emphasis: {
-	                    shadowBlur: 10,
-	                    shadowOffsetX: 0,
-	                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-	                }
+	        trigger: 'axis',
+	        showDelay : 0,
+	        axisPointer:{
+	            show: true,
+	            type : 'cross',
+	            lineStyle: {
+	                type : 'dashed',
+	                width : 1
 	            }
+	        },
+	        zlevel: 1
+	    },
+	    xAxis : [
+	        {
+	            scale:true,
+	            nameLocation:'end',
+	            splitLine:{
+                	show:false
+            	},
+            	axisTick:{
+            		inside: true
+            	},
+            	axisLine:{
+            		show:false
+            	},
+				type : 'category'
 	        }
-	    ]
+	    ],
+	    yAxis : [
+	        {
+	            type : 'value',
+	            scale:true,
+	            nameLocation:'end',
+	            splitLine:{
+                	show:false
+            	},
+            	axisLine:{
+            		show:false
+            	},
+            	axisTick:{
+            		inside: true
+            	}
+	        }
+	    ],
+	    grid:{
+	    	show:true,
+	    	borderColor:'#000',
+	    	
+	    },
+		legend: {
+			y:vue.legendY,
+			x:vue.legendX
+		}
 	};
 	
 	//点击柱子，对应的数据高亮显示
@@ -184,10 +222,10 @@ $(function(){
 		var tr=$("#file table tr").first();
 		var ths=$(tr).children("th");
 		//取到x轴名字
-		var geneText=vue.geneColumn;
+		var xText=vue.xColumnField;
 		var index;
 		for(var i=0;i<ths.length;i++){
-			if(ths[i].innerText==geneText){
+			if(ths[i].innerText==xText){
 				index=i;
 				break;
 			}									
@@ -226,10 +264,11 @@ $(function(){
 	//提交参数
 	$("#submit_paras").click(function(){
 		var formData =  allParams();//取form表单参数
+		console.log(formData)
 		updateEcharts(myChart,formData);//更新echarts设置 标题 xy轴文字之类的
 		myChart.showLoading();
 		$.ajax({
-			url: 'json/pieDrawFileData.json',  
+			url: 'json/barDrawFileData.json',  
 			type:'get',
 			data:{
 				fileName:formData.input
@@ -237,7 +276,7 @@ $(function(){
 			dataType: "json",
 			success:function(data) {
 				myChart.hideLoading();
-				updateEchartsData(myChart,formData,data["content"],vue.geneColumn,vue.funColumn);
+				updateEchartsData(myChart,formData,data["content"],vue.xColumnField);
 			},    
 			error : function(XMLHttpRequest) {
 				alert(XMLHttpRequest.status +' '+ XMLHttpRequest.statusText);
@@ -248,7 +287,7 @@ $(function(){
 	$("#btnPng").click(function(){
 		downloadPic(myChart);
 	});
-	function downloadPic(myChart){
+  	function downloadPic(myChart){
 		var $a = document.createElement('a');
 		var type = 'png';
 		var title = myChart.getModel().get('title.0.text') || 'echarts';
@@ -277,12 +316,11 @@ $(function(){
             var tab = window.open();
             tab.document.write(html);
         }
-	}
+  	}
 	//与后台交互时冻结窗口
 	$(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
 
 });
-
 function updateEcharts(echarts,data){
 	var color = [];
 	$(".spectrum").each(function(){
@@ -294,10 +332,20 @@ function updateEcharts(echarts,data){
 			text:data.title,
 			textStyle:buildTextStyle(data.title_font,data.title_size)
 		},
-		legend:{
-			x:data.legendX
+		xAxis :{
+			name:data.xlab,
+			nameTextStyle:buildTextStyle(data.xlab_font,data.xlab_size)
 		},
-		color:color	
+		yAxis :{
+			name:data.ylab,
+			nameTextStyle:buildTextStyle(data.ylab_font,data.ylab_size)
+		},
+		legend:{
+			x:data.legendX,
+			y:data.legendY
+		},
+		color:color
+		
 	});
 }
 
@@ -316,42 +364,54 @@ function buildTextStyle(font,fontSize){
 	return {
 		fontStyle:fontStyle,
 		fontWeight:fontWeight,
-		fontSize:fontSize
+		fontSize:fontSize	
 	}
 }
-function updateEchartsData(echarts,echartsStyle,echartsData,geneColumnField,funColumnField){
+function updateEchartsData(echarts,echartsStyle,echartsData,xAxisField){
 	if(echartsData&&echartsData.length>0){
 		var option = {
-			series:[{
-				type:"pie",
-				radius : '55%',
-            	center: ['50%', '60%'],
-				data:[]
-			}],
+			series:[],
+			xAxis:{},
 			legend: {
 				data:[]
 			}
 		};
-		var geneIndex,funIndex;
-		for(var i=0;i<echartsData[0].length;i++){
-			if(echartsData[0][i]==geneColumnField){
-				geneIndex=i;	
+		var resultData = new Array();  //先声明一维
+		for(var k=0;k<echartsData[0].length;k++){    //一维长度为i,i为变量，可以根据实际情况改变
+			resultData[k]=new Array();  //声明二维，每一个一维数组里面的一个元素都是一个数组；
+			for(var j=0;j<echartsData.length;j++){   //一维数组里面每个元素数组可以包含的数量p，p也是一个变量；
+				resultData[k][j]="";    //这里将变量初始化，我这边统一初始化为空，后面在用所需的值覆盖里面的值
 			}
-			if(echartsData[0][i]==funColumnField){
-				funIndex=i;	
+		}
+		for(var i=0;i<echartsData.length;i++){//循环表的每一行数据
+			for(var j=0;j<echartsData[i].length;j++){
+				var record = echartsData[i][j];
+				resultData[j][i]=record;
 			}
 		}
 		
-		for(var i=1;i<echartsData.length;i++){
-			option.series[0].data.push({
-				name:echartsData[i][geneIndex],
-				value:echartsData[i][funIndex]
-			});
-			option.legend.data.push(echartsData[i][geneIndex]);
-			var numWidth=parseInt(echartsStyle.legendWidth);
-			option.legend.itemWidth=numWidth;
-			var numHeight=parseInt(echartsStyle.legendHeight);
-			option.legend.itemHeight=numHeight;
+		for(var i=0;i<resultData.length;i++){
+			var row = resultData[i];
+			var head = row[0];
+			row.shift();
+			var data = row;
+			if(head == xAxisField){
+				option.xAxis.data=data;
+			}else{
+				option.series.push({
+					type:"bar",
+					barWidth: echartsStyle.barWidth,
+					name:head,
+					data:data
+				});
+				option.legend.data.push(head);
+				var numWidth=parseInt(echartsStyle.legendWidth);
+				var numHeight=parseInt(echartsStyle.legendHeight);
+				option.legend.itemHeight=numHeight;
+				option.legend.itemWidth=numWidth;
+			}
+			
+			
 		}
 		echarts.setOption(option);
 	}

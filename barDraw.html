@@ -187,7 +187,17 @@
 									<div class="input_b_t1">字体:</div>
 								</div>
 								<div class="line"></div>
-			
+								<div class="part">
+									<div class="input_a_l">颜色方案:</div>
+									<div class="input_b_3" style="float: left;width: 30%;">
+										<select id="colorProject"  name="colorProject" class="selectpicker select_width" autocomplete="off" >
+											<option value="project1">方案一</option>
+											<option value="project2">方案二</option>
+											<option value="project3">方案三</option>
+										</select>
+									</div>									
+								</div>
+								<div class="line"></div>
 								<div v-for="(item,index) in fileData['content'][0]" v-if="item!=xColumnField" class="part">
 									<div class="input_e_1">						
 											{{item}}:
@@ -213,20 +223,20 @@
 								</div>
 								<div class="part">
 									<div class="input_a_l">图例位置:</div>
-									<div class="input_b_t1" style="float: left;">X轴:</div>	
+									<div class="input_b_t1" style="float: left;">水平:</div>	
 									<div class="input_b_3" style="float: left;width: 85px;">
 										<select v-model="legendX" id="legendX"  name="legendX" class="selectpicker select_width" autocomplete="off" >
-											<option value="Left">Left</option>
-											<option value="Center">Center</option>
-											<option value="Right">Right</option>
+											<option value="left">Left</option>
+											<option value="center">Center</option>
+											<option value="right">Right</option>
 										</select>
 									</div>		
-									<div class="input_b_t1" style="float: left;margin-left: 20px;">Y轴:</div>
+									<div class="input_b_t1" style="float: left;margin-left: 20px;">垂直:</div>
 									<div class="input_b_3" style="float: left;width: 85px;">
 										<select v-model="legendY" id="legendY" name="legendY" class="selectpicker select_width" autocomplete="off" >
-											<option value="Top">Top</option>
-											<option value="Center">Center</option>
-											<option value="Bottom">Bottom</option>
+											<option value="top">Top</option>
+											<option value="center">Center</option>
+											<option value="bottom">Bottom</option>
 										</select>
 									</div>											
 									
@@ -408,6 +418,7 @@
     <script>
     	$(function(){
     		$("#xColumnField").selectpicker({noneSelectedText:'请选择'});
+    		
     	})
    	//支持下载pdf格式
     function convertCanvasToImage() {
