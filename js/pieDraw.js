@@ -6,6 +6,7 @@ $(function(){
 	vue=new Vue({
 		el:"#myTabContent",
 		data:{
+			picked: '',
 			input:"",
 			title:"",
 			t:null,

@@ -215,22 +215,23 @@
 								<div class="line"></div>
 								<div class="part">
 									<div class="input_a_l">饼图类型:</div>
-									<div class="input_f_2" style="width: auto;">
+									<div id="radioArea" class="input_f_2" style="width: auto;">
 										<div class="radio" style="display: inline-block;">
-											  <label>
-											    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>标准饼图
+											  <label for="radio1">
+											    <input v-model="picked"   type="radio" name="radio1" id="radio1" value="标准饼图" >标准饼图
 											  </label>
 										</div>
 										<div class="radio" style="display: inline-block;margin-left: 10px;">
-											  <label>
-											    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option1">环形图
+											  <label for="radio2">
+											    <input v-model="picked" type="radio" name="radio2" id="radio2" value="环形图">环形图
 											  </label>
 										</div>
 										<div class="radio" style="display: inline-block;margin-left: 10px;">
-											  <label>
-											    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option1">环形图
+											  <label for="radio3">
+											    <input v-model="picked" type="radio" name="radio3" id="radio3" value="半环图">半环图
 											  </label>
 										</div>
+										<span>Picked: {{ picked }}</span>
 									</div>
 								</div>
 							</form>
