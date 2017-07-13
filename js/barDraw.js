@@ -3,7 +3,7 @@ var paramUrl = 'json/jobUrl.json'; //module+'/Data/remoteDirView';  //选择路�
 $(function(){
 	var color1=['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'];
 	var color2=['#c23531','#00f', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'];
-	var color3=['#ff000','#c23531','#0f0', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'];
+//	var color3=['#ff000','#c23531','#0f0', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'];
 	vue=new Vue({
 		el:"#myTabContent",
 		data:{
@@ -251,9 +251,10 @@ $(function(){
 			vue.color=color1;
 		}else if($(this).selectpicker("val")=="project2"){
 			vue.color=color2;
-		}else{
-			vue.color=color3;
 		}
+//		else{
+//			vue.color=color3;
+//		}
 	});
 	//点击示例文件，加载已有参数
 	$("#use_default").click(function(){

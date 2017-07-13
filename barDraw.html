@@ -191,13 +191,12 @@
 									<div class="input_a_l">颜色方案:</div>
 									<div class="input_b_3" style="float: left;width: 30%;">
 										<select id="colorProject"  name="colorProject" class="selectpicker select_width" autocomplete="off" >
-											<option value="project1">方案一</option>
-											<option value="project2">方案二</option>
-											<option value="project3">方案三</option>
+											<option value="project1">自定义</option>
+											<option value="project2">其它</option>
+											<!--<option value="project3">方案三</option>-->
 										</select>
 									</div>									
 								</div>
-								<div class="line"></div>
 								<div v-for="(item,index) in fileData['content'][0]" v-if="item!=xColumnField" class="part">
 									<div class="input_e_1">						
 											{{item}}:
@@ -210,7 +209,8 @@
 									</div>	
 								</div>
 
-								<div class="line" v-if="fileData['content'][0]&&fileData['content'][0].length>1"></div>
+								<!--<div class="line" v-if="fileData['content'][0]&&fileData['content'][0].length>1"></div>-->
+								<div class="line"></div>
 								<div class="part">
 									<div class="input_a_l">图例宽度:</div>
 									<div class="input_b_2">

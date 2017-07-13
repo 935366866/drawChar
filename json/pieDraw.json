@@ -3,7 +3,8 @@
     "title": "title1",
     "legendWidth":25,  
     "legendHeight":14,
-    "legendX":"left"
+    "legendX":"left",
+    "legendY":"top",
     "geneColumn":1,
     "funColumn":2
 }
