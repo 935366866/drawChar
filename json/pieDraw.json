@@ -6,5 +6,7 @@
     "legendX":"left",
     "legendY":"top",
     "geneColumn":1,
-    "funColumn":2
+    "funColumn":2,
+    "pieType": "标准饼图"
+    
 }
