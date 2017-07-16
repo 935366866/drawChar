@@ -164,6 +164,18 @@ $(function(){
 	        top:20
 	       
 	    },
+		brush: {
+	        toolbox: ['rect', 'polygon', 'lineX', 'lineY', 'keep', 'clear'],
+	        xAxisIndex: 0
+	    },
+	    toolbox: {
+	        feature: {
+	            magicType: {
+	                type: ['stack', 'tiled']
+	            },
+	            dataView: {}
+	        }
+	    },
 	    tooltip : {
 	        trigger: 'axis',
 	        showDelay : 0,
@@ -219,6 +231,31 @@ $(function(){
 			x:vue.legendX
 		}
 	};
+	myChart.on('brushSelected', renderBrushed);
+
+	function renderBrushed(params) {
+	    var brushed = [];
+	    var brushComponent = params.batch[0];
+	
+	    for (var sIdx = 0; sIdx < brushComponent.selected.length; sIdx++) {
+	        var rawIndices = brushComponent.selected[sIdx].dataIndex;
+	        brushed.push('[Series ' + sIdx + '] ' + rawIndices.join(', '));
+	    }
+	
+	    myChart.setOption({
+	        title: {
+	            backgroundColor: '#333',
+	            text: 'SELECTED DATA INDICES: \n' + brushed.join('\n'),
+	            bottom: 0,
+	            right: 0,
+	            width: 100,
+	            textStyle: {
+	                fontSize: 12,
+	                color: '#fff'
+	            }
+	        }
+	    });
+	}
 	
 	//点击柱子，对应的数据高亮显示
 	myChart.on('click', function (parmas) {
