@@ -6,7 +6,7 @@ $(function(){
 	vue=new Vue({
 		el:"#myTabContent",
 		data:{
-			pieType: '',
+			pieType:'标准饼图',
 			input:"",
 			title:"",
 			t:null,
@@ -93,6 +93,17 @@ $(function(){
 			        $("#geneColumn").selectpicker("val",newValue);
 			    }
 			},
+			radius:function(){
+				if(this.pieType=="标准饼图"){
+					return "55%"
+				}else if(this.pieType=="环形图"){
+					return ["50%","70%"]
+				}else if(this.pieType=="半环图"){
+					
+				}else{
+					alert("不存在的饼图类型");
+				}
+			},
 			funColumn:{
 			  	get: function () {
 			      return this.funColumn_sel;
@@ -121,6 +132,7 @@ $(function(){
 					}
 				});
 			},
+			
 			fileData:function(val,oldVal){
 				this.$nextTick(function(){
 					$('#geneColumn').selectpicker('refresh');				
@@ -176,9 +188,9 @@ $(function(){
 		},
 		series : [
 	        {
-	            name: '访问来源',
+	            name: ' ',
 	            type: 'pie',
-	            radius : '55%',
+	            radius : vue.radius,
 	            center: ['50%', '60%'],
 	            data:[],
 	            itemStyle: {
@@ -323,7 +335,13 @@ function updateEcharts(echarts,data){
 			x:data.legendX,
 			y:data.legendY
 		},
-		color:color	
+		color:color,
+		series : [
+	        {
+	            name: ' ',
+	            radius : vue.radius,
+	        }
+	    ]
 	});
 }
 
@@ -350,7 +368,7 @@ function updateEchartsData(echarts,echartsStyle,echartsData,geneColumnField,funC
 		var option = {
 			series:[{
 				type:"pie",
-				radius : '55%',
+				radius : vue.radius,
             	center: ['50%', '60%'],
 				data:[]
 			}],

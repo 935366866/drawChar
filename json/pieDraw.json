@@ -7,6 +7,5 @@
     "legendY":"top",
     "geneColumn":1,
     "funColumn":2,
-    "pieType": "标准饼图"
-    
+    "pieType": "环形图"  
 }
