@@ -1,11 +1,17 @@
 {
     "input": "/whx/abc/1.txt",
     "title": "title1",
+    "title_size": "18",
+    "title_font": "bold",
+    "titleX":"center",
+    "titleY":"top",
     "legendWidth":25,  
     "legendHeight":14,
     "legendX":"left",
     "legendY":"top",
     "geneColumn":1,
     "funColumn":2,
-    "pieType": "环形图"  
+    "pieType": "环形图",
+    "legendLayout":"vertical"
+
 }

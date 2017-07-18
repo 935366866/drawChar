@@ -3,6 +3,8 @@
     "title": "title1",
     "title_size": "18",
     "title_font": "bold",
+    "titleX":"center",
+    "titleY":"top",
     "xlab": "xxx",
     "xlab_size": "13",
     "xlab_font": "italic",
@@ -14,6 +16,7 @@
     "legendWidth":25,  
     "legendHeight":14,
     "legendY":"bottom",
-    "legendX":"center"
+    "legendX":"center",
+    "legendLayout":"horizontal"
          
 }

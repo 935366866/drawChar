@@ -26,7 +26,10 @@ $(function(){
 			xColumnField_sel:null,
 			legendX_sel:"",
 			legendY_sel:"",
-			color:color1
+			titleX_sel:"",
+			titleY_sel:"",
+			color:color1,
+			legendLayout_sel:""
 
 		},
 		computed: {
@@ -103,17 +106,45 @@ $(function(){
 		       $("#legendY").selectpicker("val",newValue);
 		    }
 		  },
-		  xColumnField:{
-		  	get: function () {
-		      return this.xColumnField_sel;
-		    },
-		    set: function (newValue) {
-		    	if(!newValue) return;
-		    	this.xColumnField_sel = newValue;
-		    	
-		        $("#xColumnField").selectpicker("val",newValue);
-		    }
-		  }
+		  titleX:{
+			  	get: function () {
+			      return this.titleX_sel;
+			   },
+			    set: function (newValue) {
+			    	if(!newValue) return;
+			    	this.titleX_sel = newValue;
+			       $("#titleX").selectpicker("val",newValue);
+			    }
+			},
+			titleY:{
+			  	get: function () {
+			      return this.titleY_sel;
+			   	},
+			    set: function (newValue) {
+			    	if(!newValue) return;
+			    	this.titleY_sel = newValue;
+			       $("#titleY").selectpicker("val",newValue);
+			    }
+			},
+			xColumnField:{
+			  	get: function () {
+			      return this.xColumnField_sel;
+			    },
+			    set: function (newValue) {
+			    	if(!newValue) return;
+			    	this.xColumnField_sel = newValue;		    	
+			        $("#xColumnField").selectpicker("val",newValue);
+			    }
+			},
+			legendLayout:{
+			  	get: function () {
+			      return this.legendLayout_sel;
+			   	},
+			    set: function (newValue) {
+			    	this.legendLayout_sel = newValue;
+			       $("#legendLayout").selectpicker("val",newValue);
+			    }
+			},
 		},
 		watch:{
 			input:function(val,oldVal){
@@ -160,7 +191,8 @@ $(function(){
 	        	fontWeight:'normal',
 	        	fontSize:14
 	        },
-	        x:"center",
+	        x:vue.titleX,
+	        y:vue.titleY,
 	        top:20
 	       
 	    },
@@ -228,24 +260,27 @@ $(function(){
 	    },
 		legend: {
 			y:vue.legendY,
-			x:vue.legendX
+			x:vue.legendX,
+			orient:vue.legendLayout
 		}
 	};
+	
 	myChart.on('brushSelected', renderBrushed);
 
 	function renderBrushed(params) {
+		var tr=$("#file table tr").first();
 	    var brushed = [];
 	    var brushComponent = params.batch[0];
 	
 	    for (var sIdx = 0; sIdx < brushComponent.selected.length; sIdx++) {
+	    	
 	        var rawIndices = brushComponent.selected[sIdx].dataIndex;
 	        brushed.push('[Series ' + sIdx + '] ' + rawIndices.join(', '));
-	    }
-	
+	    }	
 	    myChart.setOption({
 	        title: {
 	            backgroundColor: '#333',
-	            text: 'SELECTED DATA INDICES: \n' + brushed.join('\n'),
+	            text:brushed.join('\n'),
 	            bottom: 0,
 	            right: 0,
 	            width: 100,
@@ -381,7 +416,9 @@ function updateEcharts(echarts,data){
 	echarts.setOption({
 		title:{
 			text:data.title,
-			textStyle:buildTextStyle(data.title_font,data.title_size)
+			textStyle:buildTextStyle(data.title_font,data.title_size),
+			x:data.titleX,
+			y:data.titleY,
 		},
 		xAxis :{
 			name:data.xlab,
@@ -393,7 +430,8 @@ function updateEcharts(echarts,data){
 		},
 		legend:{
 			x:data.legendX,
-			y:data.legendY
+			y:data.legendY,
+			orient:data.legendLayout
 		},
 		color:color
 		

@@ -14,6 +14,9 @@ $(function(){
 			legendHeight:"",
 			legendX_sel:"",
 			legendY_sel:"",
+			titleX_sel:"",
+			titleY_sel:"",
+			legendLayout_sel:"",
 			geneColumn_sel:null,
 			funColumn_sel:null,
 			fileData:{
@@ -83,6 +86,35 @@ $(function(){
 			       $("#legendY").selectpicker("val",newValue);
 			    }
 			},
+			titleX:{
+			  	get: function () {
+			      return this.titleX_sel;
+			   },
+			    set: function (newValue) {
+			    	if(!newValue) return;
+			    	this.titleX_sel = newValue;
+			       $("#titleX").selectpicker("val",newValue);
+			    }
+			},
+			titleY:{
+			  	get: function () {
+			      return this.titleY_sel;
+			   },
+			    set: function (newValue) {
+			    	if(!newValue) return;
+			    	this.titleY_sel = newValue;
+			       $("#titleY").selectpicker("val",newValue);
+			    }
+			  },
+			legendLayout:{
+			  	get: function () {
+			      return this.legendLayout_sel;
+			   },
+			    set: function (newValue) {
+			    	this.legendLayout_sel = newValue;
+			       $("#legendLayout").selectpicker("val",newValue);
+			    }
+			},
 			geneColumn:{
 			  	get: function () {
 			      return this.geneColumn_sel;
@@ -95,11 +127,11 @@ $(function(){
 			},
 			radius:function(){
 				if(this.pieType=="标准饼图"){
-					return "55%"
+					return "55%";
 				}else if(this.pieType=="环形图"){
-					return ["50%","70%"]
-				}else if(this.pieType=="半环图"){
-					
+					return ["50%","70%"];
+				}else if(this.pieType=="南丁格尔玫瑰图"){
+					return [20, 110];
 				}else{
 					alert("不存在的饼图类型");
 				}
@@ -160,7 +192,7 @@ $(function(){
 			}
 		}
 	});
-	
+
 	 // 指定图表的配置项和数据
    	var myChart = echarts.init(document.getElementById('main')); 
     var option = {
@@ -172,7 +204,8 @@ $(function(){
 	        	fontWeight:'normal',
 	        	fontSize:14
 	        },
-	        x:"center",
+	        x:vue.titleX,
+	        y:vue.titleY,
 	        top:10
 	       
 	    },
@@ -184,7 +217,8 @@ $(function(){
 	    	orient: 'vertical',
 	    	data: [],
 	    	y:vue.legendY,
-			x:vue.legendX
+			x:vue.legendX,
+			orient:vue.legendLayout
 		},
 		series : [
 	        {
@@ -329,11 +363,14 @@ function updateEcharts(echarts,data){
 	echarts.setOption({
 		title:{
 			text:data.title,
+			x:data.titleX,
+			y:data.titleY,
 			textStyle:buildTextStyle(data.title_font,data.title_size)
 		},
 		legend:{
 			x:data.legendX,
-			y:data.legendY
+			y:data.legendY,
+			orient:data.legendLayout
 		},
 		color:color,
 		series : [
@@ -376,6 +413,13 @@ function updateEchartsData(echarts,echartsStyle,echartsData,geneColumnField,funC
 				data:[]
 			}
 		};
+
+		if(vue.radius[0]==20){
+			option.series[0].roseType='radius';
+		}else{
+			option.series[0].roseType='';
+		}
+
 		var geneIndex,funIndex;
 		for(var i=0;i<echartsData[0].length;i++){
 			if(echartsData[0][i]==geneColumnField){
@@ -397,6 +441,7 @@ function updateEchartsData(echarts,echartsStyle,echartsData,geneColumnField,funC
 			var numHeight=parseInt(echartsStyle.legendHeight);
 			option.legend.itemHeight=numHeight;
 		}
+
 		echarts.setOption(option);
 	}
 	
