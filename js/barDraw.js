@@ -199,14 +199,14 @@ $(function(){
 		brush: {
 	        toolbox: ['rect', 'polygon', 'lineX', 'lineY', 'keep', 'clear'],
 	        xAxisIndex: 0
-
 	    },
 	    toolbox: {
 	        feature: {
 	            magicType: {
 	                type: ['stack','line','bar','tiled']
 	            },
-	            dataView: {}
+	            restore: {show: true},
+	            dataView: {show:true,readOnly: true}
 	        }
 	    },
 	    tooltip : {
@@ -268,7 +268,6 @@ $(function(){
 	};
 	
 	myChart.on('brushSelected', renderBrushed);
-
 	function renderBrushed(params) {
 		var tr=$("#file table tr").first();
 		var ths=$(tr).children("th");
@@ -362,23 +361,27 @@ $(function(){
 	//提交参数
 	$("#submit_paras").click(function(){
 		var formData =  allParams();//取form表单参数
-		updateEcharts(myChart,formData);//更新echarts设置 标题 xy轴文字之类的
-		myChart.showLoading();
-		$.ajax({
-			url: 'json/barDrawFileData.json',  
-			type:'get',
-			data:{
-				fileName:formData.input
-			},
-			dataType: "json",
-			success:function(data) {
-				myChart.hideLoading();
-				updateEchartsData(myChart,formData,data["content"],vue.xColumnField);
-			},    
-			error : function(XMLHttpRequest) {
-				alert(XMLHttpRequest.status +' '+ XMLHttpRequest.statusText);
-			}
-		});
+		if(formData.input==""){
+			alert("请输入文件");
+		}else{
+			updateEcharts(myChart,formData);//更新echarts设置 标题 xy轴文字之类的
+			myChart.showLoading();
+			$.ajax({
+				url: 'json/barDrawFileData.json',  
+				type:'get',
+				data:{
+					fileName:formData.input
+				},
+				dataType: "json",
+				success:function(data) {
+					myChart.hideLoading();
+					updateEchartsData(myChart,formData,data["content"],vue.xColumnField);
+				},    
+				error : function(XMLHttpRequest) {
+					alert(XMLHttpRequest.status +' '+ XMLHttpRequest.statusText);
+				}
+			});
+		}
 	});
 	//支持下载png格式
 	$("#btnPng").click(function(){

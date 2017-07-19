@@ -250,8 +250,7 @@ $(function(){
 	    ],
 	    grid:{
 	    	show:true,
-	    	borderColor:'#000',
-	    	
+	    	borderColor:'#000',	    	
 	    },
 		legend: {
 			y:vue.legendY,
@@ -318,7 +317,6 @@ $(function(){
 	//提交参数
 	$("#submit_paras").click(function(){
 		var formData =  allParams();//取form表单参数
-		console.log(formData)
 		if(formData.input==""){
 			alert("请输入文件");
 		}else{
