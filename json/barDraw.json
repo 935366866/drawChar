@@ -3,7 +3,7 @@
     "title": "title1",
     "title_size": "18",
     "title_font": "bold",
-    "titleX":"center",
+    "titleX":"left",
     "titleY":"top",
     "xlab": "xxx",
     "xlab_size": "13",

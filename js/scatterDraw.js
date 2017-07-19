@@ -1,6 +1,8 @@
 var paramUrl = 'json/jobUrl.json'; //module+'/Data/remoteDirView';  //选择路径的模态框，向后台请求的地址
 
 $(function(){	
+	var color1=['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'];
+	var color2=['#c23531','#00f', '#61a0a8', '#0f0', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'];
 	vue=new Vue({
 		el:"#myTabContent",
 		data:{
@@ -18,8 +20,15 @@ $(function(){
 			xlab_font_sel:"",
 			ylab_size_sel:"",
 			ylab_font_sel:"",
+			titleX_sel:"",
+			titleY_sel:"",
+			legendWidth:"",
+			legendHeight:"",
+			legendX_sel:"",
+			legendY_sel:"",
+			legendLayout_sel:"",
 			xColumnField_sel:null,
-			color:['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3']
+			color:color1
 		},
 		computed: {
 		  title_size: {
@@ -76,16 +85,64 @@ $(function(){
 		       $("#ylab_font").selectpicker("val",newValue);
 		    }
 		  },
-		  xColumnField:{
-		  	get: function () {
-		      return this.xColumnField_sel;
-		    },
-		    set: function (newValue) {
-		    	if(!newValue) return;
-		    	this.xColumnField_sel = newValue;
-		        $("#xColumnField").selectpicker("val",newValue);
-		    }
-		  }
+		  titleX:{
+			  	get: function () {
+			      return this.titleX_sel;
+			   },
+			    set: function (newValue) {
+			    	if(!newValue) return;
+			    	this.titleX_sel = newValue;
+			       $("#titleX").selectpicker("val",newValue);
+			    }
+			},
+			titleY:{
+			  	get: function () {
+			      return this.titleY_sel;
+			   	},
+			    set: function (newValue) {
+			    	if(!newValue) return;
+			    	this.titleY_sel = newValue;
+			       $("#titleY").selectpicker("val",newValue);
+			    }
+			},
+			legendX:{
+			  	get: function () {
+			      return this.legendX_sel;
+			   },
+			    set: function (newValue) {
+			    	if(!newValue) return;
+			    	this.legendX_sel = newValue;
+			       $("#legendX").selectpicker("val",newValue);
+			    }
+			},
+			legendY:{
+			  	get: function () {
+			      return this.legendY_sel;
+			   },
+			    set: function (newValue) {
+			    	this.legendY_sel = newValue;
+			       $("#legendY").selectpicker("val",newValue);
+			    }
+			},
+			legendLayout:{
+			  	get: function () {
+			      return this.legendLayout_sel;
+			   	},
+			    set: function (newValue) {
+			    	this.legendLayout_sel = newValue;
+			       $("#legendLayout").selectpicker("val",newValue);
+			    }
+			},
+			xColumnField:{
+			  	get: function () {
+			      return this.xColumnField_sel;
+			    },
+			    set: function (newValue) {
+			    	if(!newValue) return;
+			    	this.xColumnField_sel = newValue;
+			        $("#xColumnField").selectpicker("val",newValue);
+			    }
+			}
 		},
 		watch:{
 			input:function(val,oldVal){
@@ -132,7 +189,8 @@ $(function(){
 	        	fontWeight:'normal',
 	        	fontSize:14
 	        },
-	        x:"center",
+	        x:vue.titleX,
+	        y:vue.titleY,
 	        top:20
 	       
 	    },
@@ -148,6 +206,15 @@ $(function(){
 	            }
 	        },
 	        zlevel: 1
+	    },
+		toolbox: {
+	        show : true,
+	        feature : {
+	            mark : {show: true},
+	            dataZoom : {show: true},
+	            dataView : {show: true, readOnly: false},
+	            restore : {show: true}
+	        }
 	    },
 	    xAxis : [
 	        {
@@ -187,8 +254,9 @@ $(function(){
 	    	
 	    },
 		legend: {
-			bottom:0,
-			x:'center'
+			y:vue.legendY,
+			x:vue.legendX,
+			orient:vue.legendLayout
 		}
 	};
 	
@@ -218,6 +286,16 @@ $(function(){
 	$("select").on("change.bs.select",function(){
 		vue[$(this).attr("id")]=$(this).selectpicker("val");
 	})
+	$("#colorProject").on("change.bs.select",function(){
+		if($(this).selectpicker("val")=="project1"){
+			vue.color=color1;
+		}else if($(this).selectpicker("val")=="project2"){
+			vue.color=color2;
+		}
+//		else{
+//			vue.color=color3;
+//		}
+	});
 	//点击示例文件，加载已有参数
 	$("#use_default").click(function(){
 		$.ajax({
@@ -240,23 +318,28 @@ $(function(){
 	//提交参数
 	$("#submit_paras").click(function(){
 		var formData =  allParams();//取form表单参数
-		updateEcharts(myChart,formData);//更新echarts设置 标题 xy轴文字之类的
-		myChart.showLoading();
-		$.ajax({
-			url: 'json/scatterDrawFileData.json',  
-			type:'get',
-			data:{
-				fileName:formData.input
-			},
-			dataType: "json",
-			success:function(data) {
-				myChart.hideLoading();
-				updateEchartsData(myChart,formData,data["content"],vue.xColumnField);
-			},    
-			error : function(XMLHttpRequest) {
-				alert(XMLHttpRequest.status +' '+ XMLHttpRequest.statusText);
-			}
-		});
+		console.log(formData)
+		if(formData.input==""){
+			alert("请输入文件");
+		}else{
+			updateEcharts(myChart,formData);//更新echarts设置 标题 xy轴文字之类的
+			myChart.showLoading();
+			$.ajax({
+				url: 'json/scatterDrawFileData.json',  
+				type:'get',
+				data:{
+					fileName:formData.input
+				},
+				dataType: "json",
+				success:function(data) {
+					myChart.hideLoading();
+					updateEchartsData(myChart,formData,data["content"],vue.xColumnField);
+				},    
+				error : function(XMLHttpRequest) {
+					alert(XMLHttpRequest.status +' '+ XMLHttpRequest.statusText);
+				}
+			});
+		}
 	});
 //	支持下载png格式
 	$("#btnPng").click(function(){
@@ -305,7 +388,9 @@ function updateEcharts(echarts,data){
 	echarts.setOption({
 		title:{
 			text:data.title,
-			textStyle:buildTextStyle(data.title_font,data.title_size)
+			textStyle:buildTextStyle(data.title_font,data.title_size),
+			x:data.titleX,
+			y:data.titleY
 		},
 		xAxis :{
 			name:data.xlab,
@@ -314,6 +399,11 @@ function updateEcharts(echarts,data){
 		yAxis :{
 			name:data.ylab,
 			nameTextStyle:buildTextStyle(data.ylab_font,data.ylab_size)
+		},
+		legend:{
+			x:data.legendX,
+			y:data.legendY,
+			orient:data.legendLayout
 		},
 		color:color
 		
@@ -360,16 +450,11 @@ function updateEchartsData(echarts,echartsStyle,echartsData,xAxisField){
 				resultData[j][i]=record;
 			}
 		}
-		
-		
-		console.log(resultData)
 		for(var i=0;i<resultData.length;i++){
 			var row = resultData[i];
 			var head = row[0];
 			row.shift();
-			console.log(head)
 			var data = row;
-			console.log(data)
 			if(head == xAxisField){
 				option.xAxis.data=data;
 			}else{
@@ -377,9 +462,22 @@ function updateEchartsData(echarts,echartsStyle,echartsData,xAxisField){
 					type:"scatter",
 					symbolSize: echartsStyle.pointsize,
 					name:head,
+					label: {
+			            emphasis: {
+			                show: true,
+			                formatter: function(param) {
+			                    return param.data[3];
+			                },
+			                position: 'top'
+			            }
+			        },
 					data:data
 				});
 				option.legend.data.push(head);
+				var numWidth=parseInt(echartsStyle.legendWidth);
+				var numHeight=parseInt(echartsStyle.legendHeight);
+				option.legend.itemHeight=numHeight;
+				option.legend.itemWidth=numWidth;
 			}
 			
 			
@@ -393,7 +491,6 @@ function updateEchartsData(echarts,echartsStyle,echartsData,xAxisField){
 
 //参数组装
 function allParams(){
-
 	var app = $("#parameter").serializeArray();
 	var json1 = {};
 	for(var i=0;i<app.length;i++){

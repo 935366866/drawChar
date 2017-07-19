@@ -114,7 +114,7 @@
 									<div class="input_a_l">绘图列数:</div>	
 									<div class="input_a_l" style="width: 12%;">x轴数据</div>
 									<div class="input_a_m" style="width: 27%;">
-										<select v-model="xColumnField" id="xColumnField"  name="xColumnField" class="selectpicker select_width" autocomplete="off" >
+										<select v-model="xColumnField" id="xColumnField"  name="xColumnField" class="select_width" autocomplete="off" >
 											<option v-for="item in fileData['content'][0]" :value="item">{{item}}</option>
 										</select>
 									</div>		
@@ -142,6 +142,26 @@
 									</div>											
 									<div class="input_b_t1">字体:</div>
 								</div>
+								<div class="part">
+									<div class="input_a_l">标题位置:</div>
+									<div class="input_b_t1" style="float: left;">水平:</div>	
+									<div class="input_b_3" style="float: left;width: 105px;">
+										<select v-model="titleX" id="titleX"  name="titleX" class="selectpicker select_width" autocomplete="off" >
+											<option value="center">Center</option>
+											<option value="left">Left</option>
+											<option value="right">Right</option>
+										</select>
+									</div>		
+									<div class="input_b_t1" style="float: left;margin-left: 55px;">垂直:</div>
+									<div class="input_b_3" style="float: left;width: 105px;">
+										<select v-model="titleY" id="titleY" name="titleY" class="selectpicker select_width" autocomplete="off" >
+											<option value="top">Top</option>
+											<option value="center">Center</option>
+											<option value="bottom">Bottom</option>
+										</select>
+									</div>										
+								</div>
+								<div class="line"></div>
 								<div class="part">
 									<div class="input_a_l">X轴名称:</div>
 									<div class="input_b_2">
@@ -187,20 +207,26 @@
 									<div class="input_b_t1">字体:</div>
 								</div>
 								<div class="line"></div>
-			
+								<div class="part">
+									<div class="input_a_l">颜色方案:</div>
+									<div class="input_b_3" style="float: left;width: 30%;">
+										<select id="colorProject"  name="colorProject" class="selectpicker select_width" autocomplete="off" >
+											<option value="project1">自定义</option>
+											<option value="project2">其它</option>
+											<!--<option value="project3">方案三</option>-->
+										</select>
+									</div>									
+								</div>
 								<div v-for="(item,index) in fileData['content'][0]" v-if="item!=xColumnField" class="part">
 									<div class="input_e_1">						
 											{{item}}:
 									</div>
 									<div class="input_e_2 colorInput">
-										颜色:
+										自定义颜色:
 									</div>
 									<div class="input_c_4">
 										<input v-bind:value="color[index]" type="text" class="form-control spectrum">
 									</div>	
-									<!--<div class="input_e_2 colorInput">
-										位置:
-									</div>-->
 									<div class="input_c_4">
 										<select class="selectpicker select_width">
 											<option value="Top">Top</option>
@@ -211,9 +237,48 @@
 									</div>
 								</div>
 
-								<div class="line" v-if="fileData['content'][0]&&fileData['content'][0].length>1"></div>
+								<!--<div class="line" v-if="fileData['content'][0]&&fileData['content'][0].length>1"></div>-->
 								
-		
+								<div class="line"></div>
+								<div class="part">
+									<div class="input_a_l">图例宽度:</div>
+									<div class="input_b_2">
+										<input v-model="legendWidth" type="text" class="form-control" id="legendWidth" name="legendWidth" placeholder="">
+									</div>
+									<div class="input_a_l" style="width: 15%;margin-left: 30px;">图例高度:</div>
+									<div class="input_b_2">
+										<input v-model="legendHeight" type="text" class="form-control" id="legendHeight" name="legendHeight" placeholder="">
+									</div>
+								</div>
+								<div class="part">
+									<div class="input_a_l">图例位置:</div>
+									<div class="input_b_t1" style="float: left;">水平:</div>	
+									<div class="input_b_3" style="float: left;width: 85px;">
+										<select v-model="legendX" id="legendX"  name="legendX" class="selectpicker select_width" autocomplete="off" >
+											<option value="left">Left</option>
+											<option value="center">Center</option>
+											<option value="right">Right</option>
+										</select>
+									</div>		
+									<div class="input_b_t1" style="float: left;margin-left: 20px;">垂直:</div>
+									<div class="input_b_3" style="float: left;width: 85px;">
+										<select v-model="legendY" id="legendY" name="legendY" class="selectpicker select_width" autocomplete="off" >
+											<option value="top">Top</option>
+											<option value="center">Center</option>
+											<option value="bottom">Bottom</option>
+										</select>
+									</div>											
+								</div>
+								<div class="part">
+									<div class="input_a_l">图例布局:</div>
+									<div class="input_b_3" style="float: left;width: 30%;">
+										<select v-model="legendLayout" id="legendLayout"  name="legendLayout" class="selectpicker select_width" autocomplete="off" >
+											<option value="horizontal">Horizontal</option>
+											<option value="vertical">Vertical</option>
+										</select>
+									</div>	
+								</div>	
+								<div class="line"></div>
 								<div class="part">
 									<div class="input_a_l">散点大小:</div>
 									<div class="input_f_2">
@@ -388,21 +453,24 @@
     <script src="js/common.js"></script>
     <script src="js/scatterDraw.js"></script>   
     <script>
-    	
-   	//支持下载pdf格式
-    function convertCanvasToImage() {
-        html2canvas(document.getElementById('main'), {
-            onrendered: function(canvas) {
-                document.body.appendChild(canvas);
-                createPDFObject(canvas.toDataURL("image/jpeg"));
-            }
-        });
-    }
-    function createPDFObject(imgData) {
-        var doc = new jsPDF('p', 'pt');
-        doc.addImage(imgData, 10, 10, 500, 340, 'img');
-        doc.save('test.pdf');
-    }
+	    $(function(){
+			$("#xColumnField").selectpicker({noneSelectedText:'请选择'});
+			
+		})	
+	   	//支持下载pdf格式
+	    function convertCanvasToImage() {
+	        html2canvas(document.getElementById('main'), {
+	            onrendered: function(canvas) {
+	                document.body.appendChild(canvas);
+	                createPDFObject(canvas.toDataURL("image/jpeg"));
+	            }
+	        });
+	    }
+	    function createPDFObject(imgData) {
+	        var doc = new jsPDF('p', 'pt');
+	        doc.addImage(imgData, 10, 10, 500, 340, 'img');
+	        doc.save('test.pdf');
+	    }
     </script>
 </body>
 

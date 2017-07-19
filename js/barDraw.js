@@ -199,11 +199,12 @@ $(function(){
 		brush: {
 	        toolbox: ['rect', 'polygon', 'lineX', 'lineY', 'keep', 'clear'],
 	        xAxisIndex: 0
+
 	    },
 	    toolbox: {
 	        feature: {
 	            magicType: {
-	                type: ['stack', 'tiled']
+	                type: ['stack','line','bar','tiled']
 	            },
 	            dataView: {}
 	        }
@@ -250,7 +251,8 @@ $(function(){
             	},
             	axisTick:{
             		inside: true
-            	}
+            	},
+            	offset:-2
 	        }
 	    ],
 	    grid:{
@@ -269,21 +271,30 @@ $(function(){
 
 	function renderBrushed(params) {
 		var tr=$("#file table tr").first();
+		var ths=$(tr).children("th");
+		//取到x轴名字
+		var xText=vue.xColumnField;
+		var index;
+		var legendName=[]
+		for(var i=0;i<ths.length;i++){
+			if(ths[i].innerText!=xText){
+				legendName.push(ths[i].innerText)
+			}									
+		}
 	    var brushed = [];
+	    var rawIndices;
 	    var brushComponent = params.batch[0];
-	
-	    for (var sIdx = 0; sIdx < brushComponent.selected.length; sIdx++) {
-	    	
-	        var rawIndices = brushComponent.selected[sIdx].dataIndex;
-	        brushed.push('[Series ' + sIdx + '] ' + rawIndices.join(', '));
+	    for (var sIdx = 0; sIdx < brushComponent.selected.length; sIdx++) {	    	
+	        rawIndices = brushComponent.selected[sIdx].dataIndex;
+	        brushed.push('['+legendName[sIdx] +'] '+ rawIndices.join(', '));
 	    }	
 	    myChart.setOption({
 	        title: {
 	            backgroundColor: '#333',
 	            text:brushed.join('\n'),
-	            bottom: 0,
+	            bottom:0,
 	            right: 0,
-	            width: 100,
+	            width: 80,
 	            textStyle: {
 	                fontSize: 12,
 	                color: '#fff'
@@ -312,6 +323,7 @@ $(function(){
 				$(this).siblings("tr").removeClass("active");
 			}			
 		})
+//		console.log(parmas.seriesName)
 	});
     // 使用刚指定的配置项和数据显示图表。
     myChart.setOption(option);
@@ -350,7 +362,6 @@ $(function(){
 	//提交参数
 	$("#submit_paras").click(function(){
 		var formData =  allParams();//取form表单参数
-		console.log(formData)
 		updateEcharts(myChart,formData);//更新echarts设置 标题 xy轴文字之类的
 		myChart.showLoading();
 		$.ajax({
@@ -493,6 +504,7 @@ function updateEchartsData(echarts,echartsStyle,echartsData,xAxisField){
 					name:head,
 					data:data
 				});
+				
 				option.legend.data.push(head);
 				var numWidth=parseInt(echartsStyle.legendWidth);
 				var numHeight=parseInt(echartsStyle.legendHeight);
