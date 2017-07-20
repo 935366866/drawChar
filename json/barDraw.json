@@ -13,10 +13,12 @@
     "ylab_font": "italic",
     "barWidth": "自适应",
     "xColumnField":"Category",
+    "markLine":"parent1",
     "legendWidth":25,  
     "legendHeight":14,
     "legendY":"bottom",
     "legendX":"center",
-    "legendLayout":"horizontal"
-         
+    "legendLayout":"horizontal",
+    "Xgrid": "show",
+    "Ygrid": "show"       
 }

@@ -2,7 +2,7 @@ var paramUrl = 'json/jobUrl.json'; //module+'/Data/remoteDirView';  //选择路�
 
 $(function(){	
 	var color1=['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'];
-	var color2=['#c23531','#00f', '#61a0a8', '#0f0', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'];
+	var color2=['#c23531','#dd4444', '#fec42c', '#80F1BE','#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'];
 	vue=new Vue({
 		el:"#myTabContent",
 		data:{
@@ -22,13 +22,14 @@ $(function(){
 			ylab_font_sel:"",
 			titleX_sel:"",
 			titleY_sel:"",
-			legendWidth:"",
-			legendHeight:"",
+			legendDiameter:"",
 			legendX_sel:"",
 			legendY_sel:"",
 			legendLayout_sel:"",
 			xColumnField_sel:null,
-			color:color1
+			color:color1,
+			Xgrid:"hide",
+			Ygrid:"hide"
 		},
 		computed: {
 		  title_size: {
@@ -142,6 +143,20 @@ $(function(){
 			    	this.xColumnField_sel = newValue;
 			        $("#xColumnField").selectpicker("val",newValue);
 			    }
+			},
+			gridX:function(){
+				if(this.Xgrid=="show"){
+					return true;
+				}else{
+					return false;
+				}
+			},
+			gridY:function(){
+				if(this.Ygrid=="show"){
+					return true;
+				}else{
+					return false;
+				}
 			}
 		},
 		watch:{
@@ -221,7 +236,10 @@ $(function(){
 	            scale:true,
 	            nameLocation:'end',
 	            splitLine:{
-                	show:false
+                	show:vue.gridX,
+                	lineStyle:{
+                		type:'dashed'
+                	}
             	},
             	axisTick:{
             		inside: true
@@ -238,7 +256,10 @@ $(function(){
 	            scale:true,
 	            nameLocation:'end',
 	            splitLine:{
-                	show:false
+                	show:vue.gridY,
+                	lineStyle:{
+                		type:'dashed'
+                	}
             	},
             	axisLine:{
             		show:false
@@ -250,7 +271,7 @@ $(function(){
 	    ],
 	    grid:{
 	    	show:true,
-	    	borderColor:'#000',	    	
+	    	borderColor:'#000'
 	    },
 		legend: {
 			y:vue.legendY,
@@ -378,6 +399,7 @@ $(function(){
 
 });
 function updateEcharts(echarts,data){
+	console.log(data)
 	var color = [];
 	$(".spectrum").each(function(){
 		var colorStr = $(this).val();
@@ -392,11 +414,17 @@ function updateEcharts(echarts,data){
 		},
 		xAxis :{
 			name:data.xlab,
-			nameTextStyle:buildTextStyle(data.xlab_font,data.xlab_size)
+			nameTextStyle:buildTextStyle(data.xlab_font,data.xlab_size),
+			splitLine:{
+            	show:data.XgridShow
+        	}
 		},
 		yAxis :{
 			name:data.ylab,
-			nameTextStyle:buildTextStyle(data.ylab_font,data.ylab_size)
+			nameTextStyle:buildTextStyle(data.ylab_font,data.ylab_size),
+			splitLine:{
+            	show:data.YgridShow
+        	}
 		},
 		legend:{
 			x:data.legendX,
@@ -472,10 +500,9 @@ function updateEchartsData(echarts,echartsStyle,echartsData,xAxisField){
 					data:data
 				});
 				option.legend.data.push(head);
-				var numWidth=parseInt(echartsStyle.legendWidth);
-				var numHeight=parseInt(echartsStyle.legendHeight);
-				option.legend.itemHeight=numHeight;
-				option.legend.itemWidth=numWidth;
+				var numD=parseInt(echartsStyle.legendDiameter);
+				option.legend.itemHeight=numD;
+				option.legend.itemWidth=numD;
 			}
 			
 			

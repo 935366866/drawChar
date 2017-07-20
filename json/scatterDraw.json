@@ -9,13 +9,14 @@
     "xlab_size": "13",
     "xlab_font": "italic",
     "ylab": "yyy",
-    "legendWidth":25,  
-    "legendHeight":14,
+    "legendDiameter":14,
     "legendX":"center",
     "legendY":"bottom",
     "legendLayout":"horizontal",
     "ylab_size": "14",
     "ylab_font": "italic",
     "pointsize": "5",
-    "xColumnField":"group"
+    "xColumnField":"group",
+    "Xgrid": "show",
+    "Ygrid": "show"
 }

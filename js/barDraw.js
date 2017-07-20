@@ -29,8 +29,9 @@ $(function(){
 			titleX_sel:"",
 			titleY_sel:"",
 			color:color1,
-			legendLayout_sel:""
-
+			legendLayout_sel:"",
+			Xgrid:"hide",
+			Ygrid:"hide"
 		},
 		computed: {
 		  title_size: {
@@ -145,6 +146,20 @@ $(function(){
 			       $("#legendLayout").selectpicker("val",newValue);
 			    }
 			},
+			gridX:function(){
+				if(this.Xgrid=="show"){
+					return true;
+				}else{
+					return false;
+				}
+			},
+			gridY:function(){
+				if(this.Ygrid=="show"){
+					return true;
+				}else{
+					return false;
+				}
+			}
 		},
 		watch:{
 			input:function(val,oldVal){
@@ -227,7 +242,10 @@ $(function(){
 	            scale:true,
 	            nameLocation:'end',
 	            splitLine:{
-                	show:false
+                	show:vue.gridX,
+                	lineStyle:{
+                		type:'dashed'
+                	}
             	},
             	axisTick:{
             		inside: true
@@ -244,7 +262,10 @@ $(function(){
 	            scale:true,
 	            nameLocation:'end',
 	            splitLine:{
-                	show:false
+                	show:vue.gridY,
+                	lineStyle:{
+                		type:'dashed'
+                	}
             	},
             	axisLine:{
             		show:false
@@ -436,11 +457,17 @@ function updateEcharts(echarts,data){
 		},
 		xAxis :{
 			name:data.xlab,
-			nameTextStyle:buildTextStyle(data.xlab_font,data.xlab_size)
+			nameTextStyle:buildTextStyle(data.xlab_font,data.xlab_size),
+			splitLine:{
+            	show:data.XgridShow
+        	}
 		},
 		yAxis :{
 			name:data.ylab,
-			nameTextStyle:buildTextStyle(data.ylab_font,data.ylab_size)
+			nameTextStyle:buildTextStyle(data.ylab_font,data.ylab_size),
+			splitLine:{
+            	show:data.YgridShow
+        	}
 		},
 		legend:{
 			x:data.legendX,

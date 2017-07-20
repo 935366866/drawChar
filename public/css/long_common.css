@@ -38,9 +38,7 @@ html {
   z-index: 999;
 }
 .top .container{
-	width: 1186px;
-	padding-left: 26px;
-	padding-right: 11px;
+	width: 1200px;
 	position: relative;
 }
 .main_nav1 {
