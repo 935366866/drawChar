@@ -10,6 +10,8 @@
     <link href="css/bootstrap-table.css" rel="stylesheet">
     <link href="css/jquery.fileupload.css" rel="stylesheet">   
     <link href="css/bootstrap-select.css" rel="stylesheet">
+    <link href="public/css/reset.css" rel="stylesheet" />
+    <link href="public/css/long_common.css" rel="stylesheet" />
     <link href="css/soda_common.css" rel="stylesheet">
     <link href="css/spectrum.css" rel="stylesheet"/>
 </head>
@@ -17,66 +19,76 @@
 <body style="background-color:#fff;">
 	<div class="top" style="float:left;width:100%;">
 		<div class="main_nav1">
-			<div class="change_box">
+			<div class="container">
+			<a href="#" class="logo"><img src="public/image/navLogo.svg"/></a>
 				<ul class="main_nav1_left">
-					<li class="dodo"><a  href="#">DODOGENE</a></li>
-					<li class="nav_b1"><a href="#">云中漫步</a></li>
-					<li class="other_nav nav1_list1">
-						<a href="#" style="padding-left:15px;padding-right:15px;">新闻快讯<img src="img/01.png" alt=""></a>
-						<ul class="" >
-							<li><a href="#">前沿研究</a></li>
-							<li><a href="#">市场活动</a></li>
-						</ul>
-					</li>			
+					<li id="mainIndex"><a href="main.html">首页</a></li>
+					<li id="sodaIndex"><a href="sodaIndex.html">云中漫步</a></li>
+					<li id="frontierResearch"><a href="frontierResearch.html" >前沿方案</a></li>
+					<li id="marketActive"><a href="marketActive.html">市场活动</a></li>	
 				</ul>
+				<div class="form-group searchNews" id="search_news">
+					<span class="col-sm-2 control-label"><img src="public/image/navSearch.svg"/></span>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="search_news_input">
+					</div>
+				</div>
 				<ul class="main_nav1_right">
-					<li><a href="#"><img src="img/分析报告_03.png" alt="通知" /></a></li>
-					<li><a href="#"><img src="img/分析报告_05.png" alt="帮助" /></a></li>
-					<li><a href="#"><img src="img/分析报告_07.png" alt="个人中心" /></a></li>
+					<li id="searchIcon"><a href="#"><img src="public/image/navSearch.svg" alt="搜索" /></a></li>
+					<li><a href="#"><img src="public/image/navEmail.svg" alt="通知" /></a></li>
+					<li><a href="personalCenter.html"><img src="public/image/navUser.svg" alt="用户" /></a></li>
 				</ul>
 			</div>
 		</div>
-		<div class="main_nav2" style="box-shadow:-2px 3px 9px 0px #ccc;">
-			<div class="change_box">
+		<div class="main_nav2">
+			<div class="container">
 				<ul class="main_nav2_left">
-					<li style="width:110px;text-align:center;"><img src="img/nav_cloud.png" alt="" /></li>
-					<li class="nav2_list1" style="margin-right:0px;" >
-						<a href="#" style="padding-left:15px;padding-right:15px;">分析流程<img src="img/02.png" alt=""></a>
+					<li class="nav2_list1" style="width: 90px;">
+						<a href="#" class="active">流程方案<img src="public/image/navDown.svg" alt=""></a>
 						<ul class="">
-							<li><a href="">DNA流程</a></li>
-							<li><a href="">RNA流程</a></li>
-							<li><a href="">健康医学流程</a></li>
+							<li><a href="">DNA流程方案</a></li>
+							<li><a href="">RNA流程方案</a></li>
+							<li><a href="">医学流程方案</a></li>
 						</ul>				
 					</li>
-					<li class="nav2_list2" style="margin-right:0px;">
-						<a href="#" style="padding-left:15px;padding-right:15px;color:#000;">小工具<img src="img/02.png" alt=""></a>
+					<li class="nav2_list2" style="width: 73px;">
+						<a href="#">小工具<img src="public/image/navDown.svg" alt=""></a>
 						<ul class="">
+							<li><a href="">基本绘图</a></li>
+							<li><a href="">流程绘图</a></li>
+							<li><a href="">高级绘图</a></li>
+							<li><a href="">表格处理</a></li>
 							<li><a href="">计算统计</a></li>
-							<li><a href="">绘图软件</a></li>
 						</ul>
 					</li>
-					<li class=""><a href="#">我的项目</a></li>
+					<li class=""><a href="myProject.html">我的项目</a></li>
 					<li class=""><a href="#">我的目录</a></li>
-					<li class=""><a href="#">回收站</a></li>
+					<li class=""><a href="recycle.html">回收站</a></li>
 				</ul>
+				<div class="form-group">
+					<div class="col-sm-10">
+						<input type="text" class="form-control" placeholder="搜索想要使用的流程或小工具" id="search_flowapp">
+					</div>
+					<button class="col-sm-2 btn btn_blue" id="search_button">搜索</button>				
+				</div>
 			</div>
-		</div>
+		</div>	
 	</div>
 
     <div class="center_box" style="float:left;width:100%;">
 		<div class="app_title">
-			<p>差异基因火山图绘制工具 V1.0</p>
+			<p>柱状图绘制工具</p>
 		</div>
         <div class="change_box" style="padding-left: 0px; padding-right:0px;padding-bottom:50px;" id='taskPanel'> </div>       
         <div class="myTab">
         	<div style="width: 1200px;margin: 0 auto;height: 100%;">
-				<div class="tabs" style="float: left;width: 48%;">
+				<div class="tabs" style="margin-left: 10px;">
 					<ul class="nav" id="appTabLeft">
 						<li><a href="#file" data-toggle="tab">上传文件内容</a></li>
 						<li class="active" ><a href="#set" data-toggle="tab">参数设置</a></li>	
 					</ul>
 				</div>	
-				<div class="tabs" style="float: left;">
+				<div class="tabs" style="margin-left: 20px;">
 					<ul class="nav" id="appTabRight">
 						<li  ><a href="#direction" data-toggle="tab">使用说明</a></li>	
 						<li class="active"><a href="#show" data-toggle="tab">绘图展示</a></li>
@@ -211,9 +223,9 @@
 									<div class="input_a_l">颜色方案:</div>
 									<div class="input_b_3" style="float: left;width: 30%;">
 										<select id="colorProject"  name="colorProject" class="selectpicker select_width" autocomplete="off" >
-											<option value="project1">自定义</option>
-											<option value="project2">其它</option>
-											<!--<option value="project3">方案三</option>-->
+											<option value="project1">Npg</option>
+											<option value="project2">Aaas</option>
+											<option value="project3">Igv_default</option>
 										</select>
 									</div>									
 								</div>
@@ -358,7 +370,7 @@
 							</div>
 						</div>
 						<div class="panel-body">
-								<div id="main" style="width: 600px;height: 450px;"></div>
+							<div id="main" style="width: 520px;height: 420px;margin-top: 20px;"></div>
 						</div>
 					</div>
 				</div>
@@ -477,6 +489,7 @@
     <script src="js/html2canvas.min.js"></script>
     <script src="js/jspdf.min.js"></script>
     <script src="js/echarts.min.js"></script>
+    <script src="public/js/long_common.js"></script>
     <script src="js/vue.js"></script>
     <script src="js/spectrum.js"></script>
     <script src="js/jquery.spectrum-zh-cn.js"></script>

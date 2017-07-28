@@ -1,9 +1,9 @@
 var paramUrl = 'json/jobUrl.json'; //module+'/Data/remoteDirView';  //选择路径的模态框，向后台请求的地址
 
 $(function(){
-	var color1=['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'];
-	var color2=['#c23531','#00f', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'];
-//	var color3=['#ff000','#c23531','#0f0', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'];
+	var color1=["#b09b84","#da9034","#4ab1c9","#0f9a82","#3a5183","#eb977b","#828db0","#b3d4ab","#cf151b","#7c5f47"];
+	var color2=["#37458b","#de1615","#0b8543","#5b2379","#057e7c","#b11e23","#308cc6","#991c54","#808080","#191717"];
+	var color3=["#4357a5","#c43c32","#719657","#eae185","#44657f","#ea8f10","#5ca8d1","#7c2163","#72be68","#cf91a2"];
 	vue=new Vue({
 		el:"#myTabContent",
 		data:{
@@ -356,9 +356,9 @@ $(function(){
 		}else if($(this).selectpicker("val")=="project2"){
 			vue.color=color2;
 		}
-//		else{
-//			vue.color=color3;
-//		}
+		else{
+			vue.color=color3;
+		}
 	});
 	//点击示例文件，加载已有参数
 	$("#use_default").click(function(){

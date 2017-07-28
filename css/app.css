@@ -8,9 +8,9 @@
   border-bottom: solid 1px #c7c7c7;
 }
 .myTab .tabs {
-  width: 50%;
+  width: 580px;
   height: 67px;
-  float: right;
+  float: left;
   text-align: center;
 }
 .myTab .tabs .nav {
@@ -47,6 +47,7 @@
 #myTabContent {
   margin: 0 auto;
   padding-top: 120px;
+  width:1200px;
 }
 #myTabContent h3 {
   font-size: 16px;
@@ -55,7 +56,7 @@
 }
 #myTabContent .input_l {
   float: left;
-  width: 47%;
+  width: 580px;
 }
 #myTabContent .input_l .panel-heading {
   height: 51px;
@@ -84,7 +85,7 @@
 }
 #myTabContent .input_r {
   float: right;
-  width: 52%;
+  width: 580px;
 }
 #myTabContent .input_r .panel-heading {
   height: 51px;
