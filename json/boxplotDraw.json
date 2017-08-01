@@ -11,7 +11,7 @@
     "ylab": "yyy",
     "ylab_size": "14",
     "ylab_font": "italic",
-    "xColumnField":"Category",
+    "xColumnField":"#geneID",
     "legendWidth":25,  
     "legendHeight":14,
     "legendY":"bottom",
