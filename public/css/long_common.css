@@ -156,7 +156,6 @@ html {
   font-weight: bold;
   cursor: pointer;
   letter-spacing: 3px;
-  font-size: 14px;
 }
 .main_nav1 .main_nav1_left li {
   background: #13438b;
@@ -440,6 +439,5 @@ html {
   text-align: center;
   color: #999;
   padding-bottom: 10px;
-  padding-top: 10px ;
-  margin: 0 0 10px;
+  padding-top: 10px;
 }
