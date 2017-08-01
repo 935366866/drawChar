@@ -1,0 +1,22 @@
+{
+    "input": "/whx/abc/1.txt",
+    "title": "title1",
+    "title_size": "18",
+    "title_font": "bold",
+    "titleX":"center",
+    "titleY":"top",
+    "xlab": "xxx",
+    "xlab_size": "13",
+    "xlab_font": "italic",
+    "ylab": "yyy",
+    "ylab_size": "14",
+    "ylab_font": "italic",
+    "xColumnField":"Category",
+    "legendWidth":25,  
+    "legendHeight":14,
+    "legendY":"bottom",
+    "legendX":"center",
+    "legendLayout":"horizontal",
+    "Xgrid": "show",
+    "Ygrid": "show"       
+}
