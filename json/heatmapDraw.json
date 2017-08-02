@@ -10,13 +10,5 @@
     "xlab_font": "italic",
     "ylab": "yyy",
     "ylab_size": "14",
-    "ylab_font": "italic",
-    "xColumnField":"#geneID",
-    "legendWidth":25,  
-    "legendHeight":14,
-    "legendY":"bottom",
-    "legendX":"center",
-    "legendLayout":"horizontal",
-    "Xgrid": "show",
-    "Ygrid": "show"       
+    "ylab_font": "italic"    
 }
