@@ -363,14 +363,14 @@ function updateEchartsData(echartsInstance,echartsStyle,echartsData,xdata,ydata)
 			xAxis:{}
 		};
 	}
-		data = echartsData.map(function (item) {
+		data1 = echartsData.map(function (item) {
 		    return [item[1], item[0], item[2] || '-'];
 		});
 		option.xAxis.data=xdata;
 		option.yAxis.data=ydata;
 		option.series.push({
 					type:"heatmap",
-					data:data,
+					data:data1,
 					label: {
 			            normal: {
 			                show: true

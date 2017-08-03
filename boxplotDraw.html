@@ -223,9 +223,9 @@
 									<div class="input_a_l">颜色方案:</div>
 									<div class="input_b_3" style="float: left;width: 30%;">
 										<select id="colorProject"  name="colorProject" class="selectpicker select_width" autocomplete="off" >
-											<option value="project1">Npg</option>
-											<option value="project2">Aaas</option>
-											<option value="project3">Igv_default</option>
+											<option value="project1">NPG</option>
+											<option value="project2">AAAS</option>
+											<option value="project3">IGV</option>
 										</select>
 									</div>									
 								</div>
@@ -283,22 +283,7 @@
 								</div>	
 								<div class="line"></div>
 								<div class="part">
-									<div class="input_a_l">X轴网格线:</div>
-									<div id="radioArea" class="input_f_2" style="width: auto;">
-										<div class="radio" style="display: inline-block;">
-											  <label for="XgridShow">
-											    <input v-model="Xgrid"   type="radio" name="XgridShow" id="XgridShow" value="show" >显示
-											  </label>
-										</div>
-										<div class="radio" style="display: inline-block;margin-left: 10px;">
-											  <label for="XgridHide">
-											    <input v-model="Xgrid" type="radio" name="XgridHide" id="XgridHide" value="hide">隐藏
-											  </label>
-										</div>
-									</div>
-								</div>
-								<div class="part">
-									<div class="input_a_l">Y轴网格线:</div>
+									<div class="input_a_l">网格线:</div>
 									<div id="radioArea" class="input_f_2" style="width: auto;">
 										<div class="radio" style="display: inline-block;">
 											  <label for="YgridShow">
@@ -355,9 +340,11 @@
 						</div>
 						<div class="panel-body">
 							<div id="main" style="width: 520px;height: 420px;margin-top: 20px;"></div>
+							
 						</div>
 					</div>
 				</div>
+				<div id="main1" style="width: 1040px;height: 840px; display: none;"></div>
 	
 			<!-- 使用说明 -->
 				<div class="tab-pane" id="direction">
@@ -499,6 +486,7 @@
         doc.addImage(imgData, 10, 10, 500, 340, 'img');
         doc.save('test.pdf');
     }
+    
     </script>
 </body>
 

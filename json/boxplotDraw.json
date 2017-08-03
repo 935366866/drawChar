@@ -17,6 +17,5 @@
     "legendY":"bottom",
     "legendX":"center",
     "legendLayout":"horizontal",
-    "Xgrid": "show",
-    "Ygrid": "show"       
+    "Ygrid": "hide"       
 }

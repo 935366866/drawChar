@@ -19,6 +19,6 @@
     "legendY":"bottom",
     "legendX":"center",
     "legendLayout":"horizontal",
-    "Xgrid": "show",
-    "Ygrid": "show"       
+    "Xgrid": "hide",
+    "Ygrid": "hide"       
 }

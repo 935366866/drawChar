@@ -194,6 +194,7 @@ $(function(){
 			}
 		}
 	});
+	var Chart1 = echarts.init(document.getElementById('main1'));
  	var myChart = echarts.init(document.getElementById('main'));
         // 指定图表的配置项和数据
     var option = {
@@ -219,16 +220,17 @@ $(function(){
 	    xAxis : [
 	        {
 	            scale:true,
-	            nameLocation:'end',
+	            nameLocation:'middle',
+	            nameGap:21,
 	            splitLine:{
                 	show:vue.gridX,
                 	lineStyle:{
                 		type:'dashed'
                 	}
             	},
-            	axisTick:{
-            		inside: true
-            	},
+		        splitArea: {
+		            show: true
+		        },
             	axisLine:{
             		show:false
             	},
@@ -239,12 +241,10 @@ $(function(){
 	        {
 	            type : 'value',
 	            scale:true,
-	            nameLocation:'end',
+	            nameLocation:'middle',
+	            nameGap:35,
 	            splitLine:{
-                	show:vue.gridY,
-                	lineStyle:{
-                		type:'dashed'
-                	}
+                	show:false,
             	},
             	axisLine:{
             		show:false
@@ -257,8 +257,8 @@ $(function(){
 	    ],
 	    grid:{
 	    	show:true,
-	    	borderColor:'#000',
-	    	
+	    	borderColor:'#000',	
+	    	bottom:80
 	    },
 		legend: {
 			y:vue.legendY,
@@ -291,6 +291,7 @@ $(function(){
 	});
     // 使用刚指定的配置项和数据显示图表。
     myChart.setOption(option);
+    Chart1.setOption(option);
 	$("select").on("change.bs.select",function(){
 		vue[$(this).attr("id")]=$(this).selectpicker("val");
 	});
@@ -329,6 +330,7 @@ $(function(){
 			alert("请输入文件");
 		}else{
 			updateEcharts(myChart,formData);//更新echarts设置 标题 xy轴文字之类的
+			updateEcharts(Chart1,formData);
 			myChart.showLoading();
 			$.ajax({
 				url: 'json/boxplotDrawFileData.json',  
@@ -339,7 +341,8 @@ $(function(){
 				dataType: "json",
 				success:function(data) {
 					myChart.hideLoading();
-					updateEchartsData(myChart,formData,data["content"],vue.xColumnField);	
+					updateEchartsData(myChart,formData,data["content"],vue.xColumnField);
+					updateEchartsData(Chart1,formData,data["content"],vue.xColumnField);
 				},    
 				error : function(XMLHttpRequest) {
 					alert(XMLHttpRequest.status +' '+ XMLHttpRequest.statusText);
@@ -384,6 +387,7 @@ $(function(){
   	}
 	//与后台交互时冻结窗口
 	$(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
+
 
 });
 function updateEcharts(echarts,data){
@@ -471,13 +475,19 @@ function updateEchartsData(echartsInstance,echartsStyle,echartsData,xAxisField){
 			row.shift();
 			var data = row;
 			var data1 = echarts.dataTool.prepareBoxplotData([data]);
-			console.log(data1)
 			if(head == xAxisField){
 				option.xAxis.data=data1.axisData;
 			}else{
 				option.series.push({
 					type:"boxplot",
 					name:head,
+					blurSize: 10,
+					itemStyle: {
+						normal: {
+							borderWidth: 2
+						}
+										
+					},
 					data:data1.boxData
 				});				
 				option.legend.data.push(head);
