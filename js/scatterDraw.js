@@ -239,7 +239,7 @@ $(function(){
 	            splitLine:{
                 	show:vue.gridX,
                 	lineStyle:{
-                		type:'dashed'
+                		type:'solid'
                 	}
             	},
             	axisTick:{
@@ -259,7 +259,7 @@ $(function(){
 	            splitLine:{
                 	show:vue.gridY,
                 	lineStyle:{
-                		type:'dashed'
+                		type:'solid'
                 	}
             	},
             	axisLine:{

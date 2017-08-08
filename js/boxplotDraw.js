@@ -225,7 +225,7 @@ $(function(){
 	            splitLine:{
                 	show:vue.gridX,
                 	lineStyle:{
-                		type:'dashed'
+                		type:'solid'
                 	}
             	},
 		        splitArea: {
