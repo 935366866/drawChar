@@ -1,9 +1,6 @@
 var paramUrl = 'json/jobUrl.json'; //module+'/Data/remoteDirView';  //选择路径的模态框，向后台请求的地址
 
 $(function(){
-	var color1=["#b09b84","#da9034","#4ab1c9","#0f9a82","#3a5183","#eb977b","#828db0","#b3d4ab","#cf151b","#7c5f47"];
-	var color2=["#37458b","#de1615","#0b8543","#5b2379","#057e7c","#b11e23","#308cc6","#991c54","#808080","#191717"];
-	var color3=["#4357a5","#c43c32","#719657","#eae185","#44657f","#ea8f10","#5ca8d1","#7c2163","#72be68","#cf91a2"];
 	vue=new Vue({
 		el:"#myTabContent",
 		data:{
@@ -21,8 +18,7 @@ $(function(){
 			ylab_size_sel:"",
 			ylab_font_sel:"",
 			titleX_sel:"",
-			titleY_sel:"",
-			color:color1
+			titleY_sel:""
 		},
 		computed: {
 		  title_size: {
@@ -120,9 +116,6 @@ $(function(){
 			fileData:function(val,oldVal){
 				this.$nextTick(function(){
 					$('#xColumnField').selectpicker('refresh');
-					$(".spectrum").spectrum({
-						preferredFormat: "hex3"
-					});
 				});
 			}
 		}
@@ -141,7 +134,6 @@ $(function(){
 	        x:vue.titleX,
 	        y:vue.titleY,
 	        top:20
-	       
 	    },
 		tooltip: {
 		    trigger: 'item',
@@ -151,70 +143,26 @@ $(function(){
 		},
 	    xAxis : [
 	        {
-	            scale:true,
-	            nameLocation:'end',
-            	axisTick:{
-            		inside: true
-            	},
-            	axisLine:{
-            		show:false
-            	},
-				type : 'category'
+				type : 'category',
+				splitArea: {
+		            show: true
+		        }
 	        }
 	    ],
 	    yAxis : [
 	        {
-	            type : 'value',
-	            scale:true,
-	            nameLocation:'end',
-            	axisLine:{
-            		show:false
-            	},
-            	axisTick:{
-            		inside: true
-            	},
-            	offset:-2
+	            type : 'category',
+                splitArea: {
+		            show: true
+		        }
 	        }
 	    ],
-		visualMap: {
-	        min: 0,
-	        max: 1,
-	        calculable: true,
-	        orient: 'horizontal',
-	        left: 'center',
-	        bottom: '15%',
-	        inRange: {
-	            color: ['#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
-	        } 
-	    },
 	    grid:{
 	    	show:true,
 	    	borderColor:'#000',
-	    	
 	    }
 	};
 	
-/*	//点击柱子，对应的数据高亮显示
-	myChart.on('click', function (parmas) {
-		$('#appTabLeft li:eq(0) a').tab('show');
-		var tr=$("#file table tr").first();
-		var ths=$(tr).children("th");
-		//取到x轴名字
-		var xText=vue.xColumnField;
-		var index;
-		for(var i=0;i<ths.length;i++){
-			if(ths[i].innerText==xText){
-				index=i;
-				break;
-			}									
-		}
-		$("#file table tr").each(function(){
-			if($(this).children("td:eq("+index+")").text()==parmas.name){
-				$(this).addClass("active");
-				$(this).siblings("tr").removeClass("active");
-			}			
-		})
-	});*/
     // 使用刚指定的配置项和数据显示图表。
     myChart.setOption(option);
 	$("select").on("change.bs.select",function(){
@@ -313,11 +261,6 @@ $(function(){
 
 });
 function updateEcharts(echarts,data){
-	var color = [];
-	$(".spectrum").each(function(){
-		var colorStr = $(this).val();
-		color.push(colorStr);
-	});
 	echarts.setOption({
 		title:{
 			text:data.title,
@@ -332,8 +275,7 @@ function updateEcharts(echarts,data){
 		yAxis :{
 			name:data.ylab,
 			nameTextStyle:buildTextStyle(data.ylab_font,data.ylab_size)
-		},
-		color:color
+		}
 	});
 }
 
@@ -355,19 +297,31 @@ function buildTextStyle(font,fontSize){
 		fontSize:fontSize	
 	}
 }
-
 function updateEchartsData(echartsInstance,echartsStyle,echartsData,xdata,ydata){
 	if(echartsData&&echartsData.length>0){
 		var option = {
 			series:[],
-			xAxis:{}
+			xAxis:{
+				data:xdata
+			},
+			yAxis:{
+				data:ydata
+			},
+			visualMap: {
+		        min: 0,
+		        max: 1,
+		        calculable: true,
+		        orient: 'horizontal',
+		        left: 'center',
+		        bottom: '-10',
+		        inRange: {
+		            color: ['#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
+		        } 
+		    }
 		};
-	}
 		data1 = echartsData.map(function (item) {
 		    return [item[1], item[0], item[2] || '-'];
 		});
-		option.xAxis.data=xdata;
-		option.yAxis.data=ydata;
 		option.series.push({
 					type:"heatmap",
 					data:data1,
@@ -382,9 +336,9 @@ function updateEchartsData(echartsInstance,echartsStyle,echartsData,xdata,ydata)
 			                shadowColor: 'rgba(0, 0, 0, 0.5)'
 			            }
 			        }
-			});
+		});
 		echartsInstance.setOption(option);
-	
+	}
 }
 
 //---------------------------------------------------函数---------------------------
