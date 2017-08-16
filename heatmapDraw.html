@@ -164,17 +164,17 @@
 									</div>										
 								</div>							
 								<div class="line"></div>
-							<!--<div class="part">
+							<div class="part">
 									<div class="input_a_l">颜色方案:</div>
 									<div class="input_b_3" style="float: left;width: 30%;">
 										<select id="colorProject"  name="colorProject" class="selectpicker select_width" autocomplete="off" >
-											<option value="project1">Npg</option>
-											<option value="project2">Aaas</option>
-											<option value="project3">Igv_default</option>
+											<option value="project1">NPG</option>
+											<option value="project2">AAAS</option>
+											<option value="project3">IGV</option>
 										</select>
 									</div>									
 								</div>
-								<div v-for="(item,index) in fileData['content'][0]" v-if="item!=xColumnField" class="part">
+								<div v-for="(item,index) in inrange" v-if="show"  class="part">
 									<div class="input_e_1">						
 											{{item}}:
 									</div>
@@ -184,10 +184,7 @@
 									<div class="input_c_4">
 										<input v-bind:value="color[index]" type="text" class="form-control spectrum">
 									</div>	
-								</div>-->
-
-								<!--<div class="line" v-if="fileData['content'][0]&&fileData['content'][0].length>1"></div>-->
-								<!--<div class="line"></div>-->
+								</div>
 	
 							</form>
 						</div>
@@ -231,7 +228,7 @@
 							</div>
 						</div>
 						<div class="panel-body">
-							<div id="main" style="width: 520px;height: 420px;margin-top: 20px;"></div>
+							<div id="main" style="width: 560px;height: 420px;margin-top: 20px;"></div>
 						</div>
 					</div>
 				</div>

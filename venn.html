@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+	    <link href="css/app.css" rel="stylesheet" >
+	    <link href="public/css/reset.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div id="container"></div>
+	<script src="js/jquery-1.11.2.min.js"></script>
+	<script src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+    <script type="text/javascript">
+    	var renderer;
+		$(function () {
+		    renderer = new Highcharts.Renderer(
+		        $('#container')[0],
+		        400,
+		        300
+		    );
+		    renderer.circle(100, 100,50).attr({
+		        fill: 'blue',
+		        stroke: 'black',
+		        'stroke-width': 1
+		    }).add();
+		    renderer.circle(150, 100, 50).attr({
+		        fill: 'red',
+		        stroke: 'black',
+		        'stroke-width': 1
+		    }).add();
+		    renderer.text('Hello world', 200, 100).attr({
+		        rotation: 45
+		    }).css({
+		        fontSize: '16pt',
+		        color: 'green'
+		    }).add();
+		});
+    </script>
+	</body>
+</html>
